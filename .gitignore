@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+*.egg
+
+# Dist (keep wheel and installer, ignore tar.gz)
+dist/*.tar.gz
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# OS
+Thumbs.db
+.DS_Store
+
+# PETEX documentation (large PDFs - not part of the solution)
+*.pdf
+*.PDF
+
+# Kiro internal
+.kiro/
+
+# Backup files
+*.bak
+
+# Old/duplicate folders
+petex-MCP/
+
+# Runs (user-generated, large)
+runs/
+Petex/runs/
