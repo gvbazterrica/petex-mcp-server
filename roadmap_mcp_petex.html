@@ -649,33 +649,33 @@
                 </div>
 
                 <div class="phase phase-3">
-                    <div class="phase-label">Fase 3</div>
+                    <div class="phase-label">Fase 3 - CODIGO LISTO</div>
                     <h3>AWS Cloud</h3>
-                    <p class="duration">3-4 semanas</p>
+                    <p class="duration">codigo hecho, falta deploy</p>
                     <ul>
-                        <li>PDFs a S3, embeddings a OpenSearch</li>
-                        <li>Bedrock Knowledge Base</li>
-                        <li>Knowledge base de ingenieria en DynamoDB</li>
-                        <li>API Gateway para compartir entre equipos</li>
-                        <li>Versionado de modelos exitosos</li>
-                        <li>Metricas de uso y errores en CloudWatch</li>
+                        <li>&#10003; Abstraccion RAG (local &harr; Bedrock)</li>
+                        <li>&#10003; Abstraccion KB (JSON &harr; DynamoDB)</li>
+                        <li>&#10003; Migracion = 1 env var, sin reescribir</li>
+                        <li>&#10003; Guia deployment + costos + IAM</li>
+                        <li>&deg; Crear recursos AWS (cuenta + presupuesto)</li>
+                        <li>&deg; Metricas en CloudWatch</li>
                     </ul>
-                    <div class="outcome">&#10003; Conocimiento compartido entre equipos</div>
+                    <div class="outcome">&#10003; Codigo cloud-ready</div>
                 </div>
 
                 <div class="phase phase-4">
-                    <div class="phase-label">Fase 4</div>
+                    <div class="phase-label">Fase 4 - EN CURSO</div>
                     <h3>Agente Autonomo</h3>
-                    <p class="duration">4-6 semanas</p>
+                    <p class="duration">base implementada</p>
                     <ul>
-                        <li>Bedrock Agent con las 3 knowledge bases</li>
-                        <li>Razonamiento: "que correlacion para este pozo?"</li>
-                        <li>Planificacion: arma la secuencia completa</li>
-                        <li>Feedback loop: resultados &rarr; knowledge base</li>
-                        <li>Multi-well: pads completos automatizados</li>
-                        <li>Integrar papers SPE, well reports, datos de campo</li>
+                        <li>&#10003; Feedback loop (aprende de resultados)</li>
+                        <li>&#10003; Multi-well: pads completos</li>
+                        <li>&#10003; Planner que razona y explica</li>
+                        <li>&#10003; Razonamiento correlacion por formacion</li>
+                        <li>&deg; Bedrock Agent (requiere Fase 3 deploy)</li>
+                        <li>&deg; Papers SPE, well reports de campo</li>
                     </ul>
-                    <div class="outcome">&#10003; Agente que razona como un ingeniero</div>
+                    <div class="outcome">&#10003; Razona y planifica como ingeniero</div>
                 </div>
             </div>
         </div>

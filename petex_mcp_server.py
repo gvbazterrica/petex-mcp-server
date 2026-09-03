@@ -693,6 +693,65 @@ def build_integrated_model(formation: str, fluid: str = "oil",
                       indent=2, ensure_ascii=False)
 
 
+@mcp.tool()
+def record_model_success(formation: str, fluid: str, params: dict,
+                         results: dict, model_files: dict = None) -> str:
+    """Registra un modelo que se corrio con exito para que el agente aprenda.
+    Los parametros y resultados quedan como referencia para futuros pozos similares.
+    Cierra el feedback loop del agente autonomo.
+
+    Args:
+        formation: formacion del pozo
+        fluid: oil / gas_condensate
+        params: parametros usados (api, gor, correlaciones, etc)
+        results: resultados obtenidos (oil_rate, gas_rate, etc)
+        model_files: rutas de los archivos generados (opcional)
+    """
+    from petex_feedback import FeedbackLoop
+    return json.dumps(FeedbackLoop().record_success(formation, fluid, params, results, model_files),
+                      indent=2, ensure_ascii=False)
+
+
+@mcp.tool()
+def recommend_from_history(formation: str, fluid: str = "oil") -> str:
+    """Recomienda parametros basados en casos exitosos PREVIOS de una formacion.
+    A diferencia de prosper_get_recommendations (que usa la KB estatica), esta
+    aprende de los modelos reales que ya funcionaron (feedback loop).
+
+    Args:
+        formation: formacion a consultar
+        fluid: oil / gas_condensate
+    """
+    from petex_feedback import FeedbackLoop
+    rec = FeedbackLoop().recommend_params(formation, fluid)
+    if not rec:
+        return json.dumps({"nota": f"Aun no hay casos exitosos registrados para {formation}/{fluid}. "
+                          "Usar prosper_get_recommendations (KB estatica)."}, ensure_ascii=False)
+    return json.dumps(rec, indent=2, ensure_ascii=False)
+
+
+@mcp.tool()
+def plan_pad(pad_name: str, wells: list, separator_pressure_psi: float = 200) -> str:
+    """Planifica un PAD completo (varios pozos compartiendo red de superficie).
+    Razona correlaciones/PVT de cada pozo desde la KB y casos exitosos, y arma
+    la secuencia de ejecucion explicada. Por defecto solo planifica (no ejecuta).
+
+    Args:
+        pad_name: nombre del pad
+        wells: lista de pozos, cada uno {name, formation, fluid, lateral_length_m, ...}
+        separator_pressure_psi: presion del separador comun
+    """
+    from petex_pad import PadPlanner, explain_plan
+    from petex_kb_backend import get_kb_backend
+    from petex_feedback import FeedbackLoop
+    planner = PadPlanner(kb_backend=get_kb_backend(), feedback=FeedbackLoop())
+    plan = planner.plan_pad(pad_name, wells, separator_pressure_psi)
+    return json.dumps({
+        "plan": plan,
+        "explicacion": explain_plan(plan),
+    }, indent=2, ensure_ascii=False)
+
+
 # ================================================================
 # Main
 # ================================================================
