@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP PETEX - Arquitectura y Deployment AWS (Fase 3)</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--blue:#58a6ff;--green:#3fb950;--amber:#d29922;--orange:#ff7b39;--text:#e6edf3;--dim:#8b949e;--bright:#fff}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:1200px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:48px}
+header h1{font-size:2.2rem;color:var(--bright);margin-bottom:8px}
+header p{color:var(--dim)}
+.badges{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.badge{padding:4px 13px;border-radius:20px;font-size:.78rem;font-weight:600;background:rgba(255,123,57,.15);color:var(--orange)}
+h2{font-size:1.5rem;color:var(--bright);margin:44px 0 8px;display:flex;align-items:center;gap:10px}
+h2 .n{width:32px;height:32px;border-radius:8px;background:var(--orange);color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.lead{color:var(--dim);margin-bottom:24px;max-width:820px}
+
+/* Arch diagram */
+.arch{display:grid;gap:2px;background:var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px}
+.layer{background:var(--card);padding:24px}
+.layer-h{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.layer-n{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.l1 .layer-n{background:rgba(88,166,255,.2);color:var(--blue)}
+.l2 .layer-n{background:rgba(255,123,57,.2);color:var(--orange)}
+.l3 .layer-n{background:rgba(63,185,80,.2);color:var(--green)}
+.layer-t{font-size:1.1rem;font-weight:600;color:var(--bright)}
+.layer-s{font-size:.85rem;color:var(--dim)}
+.comps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}
+.comp{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px}
+.comp h4{font-size:.92rem;color:var(--bright);margin-bottom:5px}
+.comp p{font-size:.82rem;color:var(--dim)}
+.svc{display:inline-block;font-size:.68rem;padding:2px 8px;border-radius:4px;background:rgba(255,123,57,.12);color:var(--orange);border:1px solid rgba(255,123,57,.25);margin-top:8px}
+.flow{text-align:center;padding:6px;color:var(--dim);font-size:1.1rem}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:.85rem}
+th{text-align:left;padding:10px 12px;background:var(--card);color:var(--bright);border-bottom:2px solid var(--border)}
+td{padding:9px 12px;border-bottom:1px solid var(--border)}
+td code,.mono{font-family:'Consolas',monospace;font-size:.82rem;color:var(--blue)}
+
+pre{background:#010409;border:1px solid var(--border);border-radius:8px;padding:18px;overflow-x:auto;margin-bottom:20px}
+pre code{font-family:'Consolas',monospace;font-size:.82rem;color:#e6edf3;line-height:1.5}
+.cmt{color:var(--dim)}.kw{color:#ff7b72}.str{color:#a5d6ff}.fn{color:var(--blue)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:14px}
+.card h4{color:var(--bright);margin-bottom:8px}
+.card p{color:var(--dim);font-size:.88rem}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+
+.cost{font-size:1.3rem;font-weight:700;color:var(--green)}
+footer{text-align:center;padding:40px 0 0;border-top:1px solid var(--border);margin-top:44px;color:var(--dim);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>MCP PETEX en AWS</h1>
+  <p>Fase 3: arquitectura cloud y guia de deployment</p>
+  <div class="badges">
+    <span class="badge">Bedrock</span><span class="badge">OpenSearch</span>
+    <span class="badge">S3</span><span class="badge">DynamoDB</span>
+  </div>
+</header>
+
+<!-- ARQUITECTURA -->
+<h2><span class="n">1</span> Arquitectura de 3 capas</h2>
+<p class="lead">La clave del diseno: el motor de ejecucion (OpenServer) DEBE quedar local porque ahi esta la licencia PETEX. Solo el conocimiento (RAG + KB de ingenieria) migra a la nube, donde se comparte entre todo el equipo. El codigo del MCP no cambia: las abstracciones RAGBackend y KBBackend intercambian local por AWS con una variable de entorno.</p>
+
+<div class="arch">
+  <div class="layer l1">
+    <div class="layer-h"><div class="layer-n">1</div><div>
+      <div class="layer-t">Local (maquina del ingeniero)</div>
+      <div class="layer-s">Donde vive la licencia PETEX - no migra</div></div></div>
+    <div class="comps">
+      <div class="comp"><h4>Kiro + MCP Server</h4><p>El server con 16 tools corre local. Ejecuta PROSPER/MBAL/GAP via OpenServer.</p><span class="svc">Python local</span></div>
+      <div class="comp"><h4>OpenServer Executor</h4><p>Conexion a las apps PETEX. Auto-correccion con el cache local.</p><span class="svc">IPM 13.5</span></div>
+    </div>
+  </div>
+  <div class="flow">&#8645; consultas de conocimiento (HTTPS)</div>
+  <div class="layer l2">
+    <div class="layer-h"><div class="layer-n">2</div><div>
+      <div class="layer-t">AWS - Conocimiento documental</div>
+      <div class="layer-s">RAG sobre los manuales, compartido</div></div></div>
+    <div class="comps">
+      <div class="comp"><h4>Bedrock Knowledge Base</h4><p>Los 4 manuales PETEX indexados. Retrieve API responde dudas de variables/comandos.</p><span class="svc">Amazon Bedrock</span></div>
+      <div class="comp"><h4>Vector store</h4><p>Embeddings de los chunks para busqueda semantica.</p><span class="svc">OpenSearch Serverless</span></div>
+      <div class="comp"><h4>Documentos fuente</h4><p>PDFs de PROSPER, MBAL, GAP, OpenServer + hallazgos.</p><span class="svc">S3</span></div>
+      <div class="comp"><h4>Embeddings</h4><p>Modelo de embeddings gestionado.</p><span class="svc">Titan Embeddings</span></div>
+    </div>
+  </div>
+  <div class="flow">&#8645;</div>
+  <div class="layer l3">
+    <div class="layer-h"><div class="layer-n">3</div><div>
+      <div class="layer-t">AWS - Conocimiento de ingenieria</div>
+      <div class="layer-s">Correlaciones, PVT, lecciones - editable por UDS</div></div></div>
+    <div class="comps">
+      <div class="comp"><h4>KB de ingenieria</h4><p>Correlaciones y PVT por formacion. El equipo la edita via API.</p><span class="svc">DynamoDB</span></div>
+      <div class="comp"><h4>Modelos exitosos</h4><p>Versionado de .Out/.gap que funcionaron, como referencia.</p><span class="svc">S3</span></div>
+      <div class="comp"><h4>Metricas</h4><p>Uso de tools, errores, correcciones aprendidas.</p><span class="svc">CloudWatch</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ABSTRACCION -->
+<h2><span class="n">2</span> El truco: abstraccion de backend</h2>
+<p class="lead">Ya esta implementado. El MCP nunca llama a AWS directamente: llama a una interfaz. Cambiar de local a cloud es una variable de entorno.</p>
+
+<pre><code><span class="cmt"># Local (default) - offline, sin costo</span>
+<span class="kw">set</span> PETEX_RAG_BACKEND=local
+<span class="kw">set</span> PETEX_KB_BACKEND=local
+
+<span class="cmt"># AWS - compartido entre el equipo</span>
+<span class="kw">set</span> PETEX_RAG_BACKEND=bedrock
+<span class="kw">set</span> PETEX_BEDROCK_KB_ID=XXXXXXXXXX
+<span class="kw">set</span> PETEX_KB_BACKEND=dynamodb
+<span class="kw">set</span> PETEX_KB_TABLE=petex-engineering-kb
+<span class="kw">set</span> AWS_REGION=us-east-1
+
+<span class="cmt"># El codigo del MCP es identico. get_rag_backend() y</span>
+<span class="cmt"># get_kb_backend() devuelven el backend correcto segun la config.</span></code></pre>
+
+<div class="grid2">
+  <div class="card"><h4>petex_rag_backend.py</h4><p>LocalRAGBackend (TF-IDF) &harr; BedrockRAGBackend (Retrieve API). Misma interfaz query()/find_variable().</p></div>
+  <div class="card"><h4>petex_kb_backend.py</h4><p>LocalKBBackend (JSON) &harr; DynamoDBKBBackend. Misma interfaz get()/put()/list_keys().</p></div>
+</div>
+
+<!-- DEPLOYMENT -->
+<h2><span class="n">3</span> Pasos de deployment</h2>
+<table>
+<tr><th>#</th><th>Paso</th><th>Servicio</th></tr>
+<tr><td>1</td><td>Crear bucket S3 y subir los 4 PDFs + hallazgos</td><td class="mono">S3</td></tr>
+<tr><td>2</td><td>Crear coleccion vectorial (OpenSearch Serverless)</td><td class="mono">OpenSearch</td></tr>
+<tr><td>3</td><td>Crear Bedrock Knowledge Base apuntando al bucket, con Titan Embeddings</td><td class="mono">Bedrock</td></tr>
+<tr><td>4</td><td>Sync la KB (indexa los PDFs) y copiar el KB_ID</td><td class="mono">Bedrock</td></tr>
+<tr><td>5</td><td>Crear tabla DynamoDB (PK=category, SK=key) y cargar la KB de ingenieria</td><td class="mono">DynamoDB</td></tr>
+<tr><td>6</td><td>Configurar credenciales AWS en la maquina (aws configure)</td><td class="mono">IAM</td></tr>
+<tr><td>7</td><td>Setear las env vars PETEX_RAG_BACKEND=bedrock, etc.</td><td class="mono">local</td></tr>
+<tr><td>8</td><td>Listo: el MCP consulta el conocimiento en la nube</td><td class="mono">-</td></tr>
+</table>
+
+<!-- COSTOS -->
+<h2><span class="n">4</span> Costos estimados</h2>
+<p class="lead">Para un equipo chico (UDS), con uso moderado. Ordenes de magnitud, verificar precios vigentes.</p>
+<div class="grid2">
+  <div class="card">
+    <h4>Almacenamiento + indexado</h4>
+    <p>S3 (PDFs, ~30MB): centavos/mes.<br>OpenSearch Serverless: el mayor costo fijo, ~US$ por hora de OCU. Se puede pausar.</p>
+    <p class="cost">~US$ bajo/mes fijo</p>
+  </div>
+  <div class="card">
+    <h4>Consultas (por uso)</h4>
+    <p>Bedrock Retrieve: por query.<br>Titan Embeddings: por indexado (una vez) + queries.<br>DynamoDB: on-demand, centavos.</p>
+    <p class="cost">~US$ por uso</p>
+  </div>
+</div>
+<div class="card">
+  <h4>Recomendacion de costo</h4>
+  <p>Arrancar en LOCAL (costo cero, ya funciona). Migrar a AWS solo cuando varios ingenieros necesiten compartir la misma KB. El mayor costo fijo es OpenSearch Serverless; una alternativa mas barata para empezar es Bedrock KB con almacenamiento vectorial en Aurora Serverless o pgvector.</p>
+</div>
+
+<!-- IAM -->
+<h2><span class="n">5</span> Permisos IAM minimos</h2>
+<pre><code><span class="cmt"># El usuario/rol que corre el MCP necesita:</span>
+bedrock:Retrieve              <span class="cmt"># consultar la Knowledge Base</span>
+bedrock:RetrieveAndGenerate   <span class="cmt"># opcional, para respuestas generadas</span>
+dynamodb:GetItem              <span class="cmt"># leer KB de ingenieria</span>
+dynamodb:PutItem              <span class="cmt"># cargar/editar KB</span>
+dynamodb:Query
+s3:GetObject                  <span class="cmt"># leer modelos exitosos versionados</span>
+s3:PutObject</code></pre>
+
+<footer>
+  <p>MCP PETEX v2 - Fase 3 (AWS) - UDS Pan Energy</p>
+  <p style="margin-top:4px">El codigo ya soporta ambos backends. La migracion es config, no reescritura.</p>
+</footer>
+
+</div>
+</body>
+</html>
