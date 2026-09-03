@@ -1,0 +1,31 @@
+# PETEX model files (binarios, se regeneran)
+*.Out
+*.mbi
+*.gap
+*.gan
+*.tpd
+!APO-135(h).Out
+
+# PDF manuales (muy pesados para git - fuente de la KB local)
+*.pdf
+
+# Imagenes
+*.png
+*.jpg
+*.jpeg
+
+# Python
+__pycache__/
+*.pyc
+.env
+.venv/
+
+# RAG index (pesado, se regenera con: python petex_rag.py build)
+*.pkl
+
+# Correcciones aprendidas en runtime (la semilla si va al repo)
+corrections_learned.json
+
+# Temp
+C:\temp\
+temp/

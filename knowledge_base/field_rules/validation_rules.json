@@ -1,0 +1,39 @@
+{
+  "_description": "Reglas de validación y rangos operativos. El MCP chequea estos rangos antes de setear valores.",
+
+  "general": {
+    "reservoir_pressure_psi": {"min": 500, "max": 15000, "alert_above": 10000},
+    "reservoir_temp_f": {"min": 100, "max": 400, "alert_above": 350},
+    "api_gravity": {"min": 10, "max": 70},
+    "gor_scf_stb": {"min": 0, "max": 100000},
+    "water_cut_pct": {"min": 0, "max": 100},
+    "skin": {"min": -7, "max": 200, "alert_above": 50},
+    "tubing_id_inches": {"min": 1.0, "max": 7.0, "common": [2.441, 2.992, 3.5, 4.052]},
+    "casing_id_inches": {"min": 3.0, "max": 12.0, "common": [4.126, 6.184, 6.366, 8.535]},
+    "separator_pressure_psi": {"min": 15, "max": 1500},
+    "pipeline_diameter_inches": {"min": 2, "max": 24},
+    "pipeline_length_ft": {"min": 100, "max": 100000}
+  },
+
+  "horizontal_wells": {
+    "lateral_length_ft": {"min": 1000, "max": 20000, "typical_vm": 13000},
+    "kv_kh_ratio": {"min": 0.001, "max": 1.0, "typical_shale": 0.1},
+    "deviation_survey_min_points": 4,
+    "notes": "Mínimo 4 puntos de survey: surface, KOP, end build, TD"
+  },
+
+  "equipment_rules": {
+    "xmas_tree_required": true,
+    "xmas_tree_notes": "Primer registro de downhole equipment siempre es Xmas Tree con MD=0",
+    "tubing_must_have": ["TID", "TIR", "TOD", "TOR", "CID", "CIR", "MULT"],
+    "casing_must_have": ["CID", "CIR", "MULT"],
+    "surface_pipe_must_have": ["TYPE=1", "LENGTH", "ID", "ROUGH", "MULT"],
+    "geothermal_notes": "Usar MD (no TVD) para profundidades. Mínimo 2 puntos. HTC típico 2-8."
+  },
+
+  "gas_lift_rules": {
+    "min_casing_pressure_over_whp": 200,
+    "typical_injection_depth_pct_of_td": 0.85,
+    "notes": "Presión de casing debe ser > WHP + 200 psi para inyección efectiva."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "_description": "Propiedades PVT típicas por formación. Usar como defaults cuando el usuario no especifica.",
+  "_units": "API=degrees, GOR=scf/stb, GasGrav=adim, Tres=F, Pres=psi, Salinidad=ppm",
+
+  "vaca_muerta_oil": {
+    "formation": "Vaca Muerta",
+    "fluid": "oil",
+    "typical_ranges": {
+      "api": {"min": 28, "max": 45, "typical": 35},
+      "gor": {"min": 300, "max": 2000, "typical": 800},
+      "gas_gravity": {"min": 0.65, "max": 0.85, "typical": 0.75},
+      "water_gravity": {"min": 1.0, "max": 1.1, "typical": 1.02},
+      "reservoir_temp_f": {"min": 200, "max": 280, "typical": 248},
+      "reservoir_pres_psi": {"min": 4000, "max": 7500, "typical": 5500},
+      "h2s_pct": {"min": 0, "max": 1, "typical": 0},
+      "co2_pct": {"min": 0.5, "max": 3, "typical": 1.5},
+      "n2_pct": {"min": 0, "max": 1, "typical": 0.5}
+    },
+    "pb_correlation": "Standing",
+    "viscosity_correlation": "Beggs_et_al",
+    "notes": "VM tiene amplio rango de API según la zona. Bajada del Palo tiende a ser más liviano."
+  },
+
+  "vaca_muerta_gas_condensate": {
+    "formation": "Vaca Muerta",
+    "fluid": "gas_condensate",
+    "typical_ranges": {
+      "api": {"min": 45, "max": 60, "typical": 55},
+      "gor": {"min": 5000, "max": 50000, "typical": 15000},
+      "gas_gravity": {"min": 0.55, "max": 0.70, "typical": 0.60},
+      "reservoir_temp_f": {"min": 200, "max": 300, "typical": 250},
+      "reservoir_pres_psi": {"min": 5000, "max": 9000, "typical": 7000},
+      "co2_pct": {"min": 0.2, "max": 2, "typical": 0.5},
+      "n2_pct": {"min": 0.1, "max": 1, "typical": 0.3}
+    },
+    "notes": "Zona de gas condensado en el flanco norte y parte del sur."
+  },
+
+  "mulichinco": {
+    "formation": "Mulichinco",
+    "fluid": "oil",
+    "typical_ranges": {
+      "api": {"min": 25, "max": 35, "typical": 30},
+      "gor": {"min": 100, "max": 500, "typical": 300},
+      "gas_gravity": {"min": 0.7, "max": 0.85, "typical": 0.78},
+      "reservoir_temp_f": {"min": 160, "max": 220, "typical": 190},
+      "reservoir_pres_psi": {"min": 2000, "max": 4500, "typical": 3200}
+    },
+    "notes": "Convencional, baja GOR, crudo más pesado que VM."
+  }
+}

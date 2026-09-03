@@ -1,0 +1,17 @@
+{
+  "_instrucciones": "Copiar este contenido en .kiro/settings/mcp.json (workspace) o ~/.kiro/settings/mcp.json (global). Ajustar rutas si es necesario.",
+  "mcpServers": {
+    "petex": {
+      "command": "C:/ProgramData/Anaconda3/python.exe",
+      "args": [
+        "C:/Users/xgvb02/Desktop/Ds/MCP/test dario petex/petex_mcp_server.py"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "check_licenses",
+        "prosper_get_recommendations",
+        "lookup_variable"
+      ]
+    }
+  }
+}

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia MCP PETEX - Proceso y Uso</title>
+<style>
+:root{
+  --bg:#0d1117; --card:#161b22; --border:#30363d;
+  --blue:#58a6ff; --green:#3fb950; --amber:#d29922; --red:#f85149; --purple:#bc8cff;
+  --text:#e6edf3; --dim:#8b949e; --bright:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+.wrap{max-width:1200px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:56px}
+header h1{font-size:2.3rem;color:var(--bright);margin-bottom:10px}
+header p{color:var(--dim);font-size:1.05rem}
+.badges{display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.badge{padding:4px 13px;border-radius:20px;font-size:.78rem;font-weight:600}
+.b-blue{background:rgba(88,166,255,.15);color:var(--blue)}
+.b-green{background:rgba(63,185,80,.15);color:var(--green)}
+.b-amber{background:rgba(210,153,34,.15);color:var(--amber)}
+
+h2{font-size:1.5rem;color:var(--bright);margin:48px 0 8px;display:flex;align-items:center;gap:10px}
+h2 .n{width:32px;height:32px;border-radius:8px;background:var(--blue);color:#000;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:700}
+.lead{color:var(--dim);margin-bottom:24px;max-width:820px}
+
+/* Proceso timeline */
+.timeline{position:relative;padding-left:32px;margin-bottom:24px}
+.timeline::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:24px}
+.tl-item::before{content:'';position:absolute;left:-30px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--card);border:2px solid var(--blue)}
+.tl-item.done::before{background:var(--green);border-color:var(--green)}
+.tl-item h4{color:var(--bright);font-size:1.02rem;margin-bottom:3px}
+.tl-item p{color:var(--dim);font-size:.9rem}
+
+/* Cards */
+.grid{display:grid;gap:16px;margin-bottom:24px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:800px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px}
+.card h4{color:var(--bright);font-size:1rem;margin-bottom:8px}
+.card p{color:var(--dim);font-size:.88rem}
+
+/* Fix table */
+table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:.85rem}
+th{text-align:left;padding:10px 12px;background:var(--card);color:var(--bright);border-bottom:2px solid var(--border);font-weight:600}
+td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text)}
+td code,.mono{font-family:'Consolas',monospace;font-size:.82rem}
+.wrong{color:var(--red)}
+.right{color:var(--green)}
+
+/* Code block */
+pre{background:#010409;border:1px solid var(--border);border-radius:8px;padding:18px;overflow-x:auto;margin-bottom:20px}
+pre code{font-family:'Consolas',monospace;font-size:.82rem;color:#e6edf3;line-height:1.5}
+.cmt{color:var(--dim)}
+.kw{color:var(--purple)}
+.str{color:#a5d6ff}
+.fn{color:var(--blue)}
+
+/* Tool cards */
+.tool{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px}
+.tool-name{font-family:'Consolas',monospace;color:var(--green);font-weight:600;font-size:.9rem}
+.tool-lic{float:right;font-size:.68rem;padding:2px 8px;border-radius:4px}
+.lic-no{background:rgba(63,185,80,.15);color:var(--green)}
+.lic-yes{background:rgba(210,153,34,.15);color:var(--amber)}
+.tool p{color:var(--dim);font-size:.85rem;margin-top:6px}
+
+footer{text-align:center;padding:40px 0 0;border-top:1px solid var(--border);margin-top:48px;color:var(--dim);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Guia MCP PETEX</h1>
+  <p>Como se ajusto el MCP para PROSPER / MBAL / GAP y como se usa</p>
+  <div class="badges">
+    <span class="badge b-blue">UDS Pan Energy</span>
+    <span class="badge b-green">IPM 13.5</span>
+    <span class="badge b-amber">OpenServer</span>
+  </div>
+</header>
+
+<!-- ================= PROCESO ================= -->
+<h2><span class="n">1</span> El proceso de ajuste</h2>
+<p class="lead">El MCP original generaba scripts "a ciegas" asumiendo nombres de variables que muchas veces no existian. El ajuste fue un proceso de discovery: ejecutar contra la licencia real, ver que rompe, buscar en la documentacion, y corregir.</p>
+
+<div class="timeline">
+  <div class="tl-item done">
+    <h4>Diagnostico inicial</h4>
+    <p>Se intento armar un modelo integrado y fallo en casi cada paso. Los nombres de variables del MCP no coincidian con los reales de IPM 13.5.</p>
+  </div>
+  <div class="tl-item done">
+    <h4>Discovery de variables</h4>
+    <p>Se probaron cientos de nombres de variables contra PROSPER en vivo, cruzando con los 4 manuales (OpenServer, PROSPER, GAP, MBAL) para encontrar los correctos.</p>
+  </div>
+  <div class="tl-item done">
+    <h4>Identificacion del blocker</h4>
+    <p>PROSPER requiere un "Done" en Equipment Data (GUI) que genera la tubing description interna. No hay comando OpenServer equivalente.</p>
+  </div>
+  <div class="tl-item done">
+    <h4>Verificacion GAP en vivo</h4>
+    <p>Se creo y valido una red GAP completa via OpenServer. NEWITEM y LINKITEMS funcionan con DoCmd. Se corrigieron las variables reales (File, SolverPres, Desc[]).</p>
+  </div>
+  <div class="tl-item done">
+    <h4>MCP server real</h4>
+    <p>Se envolvio todo en un servidor FastMCP con 8 tools, conexion persistente, y license manager que distingue los dos tipos de error de licencia.</p>
+  </div>
+</div>
+
+<!-- ================= CORRECCIONES ================= -->
+<h2><span class="n">2</span> Correcciones clave</h2>
+<p class="lead">Las variables que estaban mal en el MCP original y sus valores reales verificados contra IPM 13.5.</p>
+
+<table>
+  <tr><th>Que se setea</th><th class="wrong">MCP original (mal)</th><th class="right">Real (verificado)</th></tr>
+  <tr><td>Profundidad geotermica</td><td class="mono wrong">Geo.Data[i].TVD</td><td class="mono right">GEO.DATA[i].MD</td></tr>
+  <tr><td>Temperatura geotermica</td><td class="mono wrong">Geo.Data[i].Temp</td><td class="mono right">GEO.DATA[i].TMP</td></tr>
+  <tr><td>U value geotermico</td><td class="mono wrong">Geo.Uval</td><td class="mono right">GEO.HTC</td></tr>
+  <tr><td>Largo horizontal (IPR)</td><td class="mono wrong">IPR.Single.HzLength</td><td class="mono right">IPR.Single.WellLen</td></tr>
+  <tr><td>Salinidad agua (PVT)</td><td class="mono wrong">PVT.Input.Salinity</td><td class="mono right">no existe</td></tr>
+  <tr><td>GAP: archivo PROSPER</td><td class="mono wrong">WELL[].PROSPERFile</td><td class="mono right">WELL[].File</td></tr>
+  <tr><td>GAP: tipo de pozo</td><td class="mono wrong">"OilProducerNoLift"</td><td class="mono right">WellType = 3</td></tr>
+  <tr><td>GAP: largo de pipe</td><td class="mono wrong">PIPE[].Length</td><td class="mono right">PIPE[].Desc[0].Length</td></tr>
+  <tr><td>GAP: presion separador</td><td class="mono wrong">SEP[].MAXPRES</td><td class="mono right">SEP[].SolverPres[0]</td></tr>
+  <tr><td>Agregar fila equipment</td><td class="mono wrong">escribir index nuevo</td><td class="mono right">DATA.ADD (DoSet "")</td></tr>
+  <tr><td>Comando lento</td><td class="mono wrong">DoSlowCmd()</td><td class="mono right">DoCmd() (no existe DoSlowCmd)</td></tr>
+</table>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h4>Blocker: Tubing Description (PROSPER)</h4>
+    <p>PROSPER genera la tubing description interna al hacer "Done" en Equipment Data desde la GUI. No hay comando OpenServer. Workaround: usar templates .Out pre-validados.</p>
+  </div>
+  <div class="card">
+    <h4>MBAL y GAP: 100% automatizables</h4>
+    <p>MBAL tiene MBAL.MB.VALIDATE y GAP tiene GAP.VALIDATE(0) que validan sin GUI. Solo PROSPER tiene el blocker.</p>
+  </div>
+</div>
+
+<!-- ================= CAPACIDADES INTELIGENTES ================= -->
+<h2><span class="n">3</span> Las capacidades inteligentes</h2>
+<p class="lead">El diferencial de la solucion: el MCP no ejecuta a ciegas. Consulta la documentacion cuando duda, aprende de sus errores, y razona decisiones de ingenieria. Estas tres piezas trabajan juntas.</p>
+
+<div class="grid grid-3">
+  <div class="card" style="border-color:rgba(88,166,255,.4)">
+    <h4 style="color:var(--blue)">RAG documental</h4>
+    <p><strong>4976 chunks</strong> de los manuales PROSPER, MBAL, GAP, OpenServer + hallazgos.</p>
+    <p style="margin-top:8px">TF-IDF + coseno, 100% offline sin descargar modelos. Responde dudas sobre variables, comandos y procedimientos.</p>
+    <p style="margin-top:8px;color:var(--blue)">-&gt; search_docs</p>
+  </div>
+  <div class="card" style="border-color:rgba(188,140,255,.4)">
+    <h4 style="color:var(--purple)">Auto-correccion con aprendizaje</h4>
+    <p>Arranca con 16 correcciones verificadas. Cuando una variable falla, consulta el RAG, la corrige y la <strong>aprende</strong>.</p>
+    <p style="margin-top:8px">La correccion se persiste: nunca vuelve a fallar con esa variable. Se vuelve mas inteligente con el uso.</p>
+    <p style="margin-top:8px;color:var(--purple)">-&gt; show_learned_corrections</p>
+  </div>
+  <div class="card" style="border-color:rgba(63,185,80,.4)">
+    <h4 style="color:var(--green)">Orquestador end-to-end</h4>
+    <p>De una intencion de alto nivel a un modelo completo. Consulta la KB de ingenieria por correlaciones y PVT segun formacion.</p>
+    <p style="margin-top:8px">Arma PROSPER-MBAL-GAP, maneja licencias, usa auto-correccion. Dry-run para revisar antes de ejecutar.</p>
+    <p style="margin-top:8px;color:var(--green)">-&gt; build_integrated_model</p>
+  </div>
+</div>
+
+<pre><code><span class="cmt"># El flujo del cerebro del MCP</span>
+<span class="fn">Intencion</span>  "pozo horizontal VM, 200 m3/d, separador 200 psi"
+    <span class="kw">|</span>
+<span class="fn">Decision</span>  KB de ingenieria -> VLP=PetroleumExperts2, IPR=Vogel, PVT tipico
+    <span class="kw">|</span>
+<span class="fn">Ejecucion</span> PROSPER -> MBAL -> GAP  (si una variable falla -> consulta RAG)
+    <span class="kw">|</span>
+<span class="fn">Aprendizaje</span> correccion encontrada -> persiste -> proxima vez no falla</code></pre>
+
+<!-- ================= LICENCIAS ================= -->
+<h2><span class="n">4</span> Manejo de licencias</h2>
+<p class="lead">Descubrimiento importante: hay dos errores de licencia distintos que el MCP ahora distingue.</p>
+
+<div class="grid grid-2">
+  <div class="card" style="border-color:rgba(210,153,34,.4)">
+    <h4 style="color:var(--amber)">App ocupada</h4>
+    <p><code class="mono">"could not locate a free license"</code></p>
+    <p>La app puntual (PROSPER/MBAL/GAP) no tiene licencia. Otra app puede estar libre. Reintentar o hacer fallback.</p>
+  </div>
+  <div class="card" style="border-color:rgba(248,81,73,.4)">
+    <h4 style="color:var(--red)">Pool OpenServer agotado</h4>
+    <p><code class="mono">"No OpenServer license available"</code></p>
+    <p>El pool entero de OpenServer esta agotado a nivel red. Ningun cliente puede conectar. Esperar o liberar sesiones.</p>
+  </div>
+</div>
+<p class="lead">Las licencias fluctuan minuto a minuto. El MCP reintenta con backoff, hace fallback (si falta MBAL, sigue PROSPER-GAP), y las tools que no usan licencia (recomendaciones, lookup) siempre funcionan.</p>
+
+<!-- ================= ESCANER EXHAUSTIVO ================= -->
+<h2><span class="n">5</span> Escaneo exhaustivo de modelos</h2>
+<p class="lead">El MCP puede leer un modelo existente (.Out/.gap/.mbi) y devolver el inventario COMPLETO de todos sus componentes. La garantia de cobertura total viene de una arquitectura de dos capas.</p>
+
+<div class="grid grid-2">
+  <div class="card" style="border-color:rgba(88,166,255,.4)">
+    <h4 style="color:var(--blue)">Capa 1: Cobertura (que existe)</h4>
+    <p>Catalogo <strong>extraido automaticamente del manual OpenServer</strong> (612 paginas). Descubre TODAS las secciones documentadas: IPR simple y multilateral, gas lift, ESP, HSP, jet pump, sucker rod, drilling, lithology, PVT correlations, y todos los nodos GAP.</p>
+  </div>
+  <div class="card" style="border-color:rgba(63,185,80,.4)">
+    <h4 style="color:var(--green)">Capa 2: Precision (nombres exactos)</h4>
+    <p>Campos <strong>verificados</strong> de cada array, limpios del ruido que introduce el PDF. Garantiza que cada variable se lea con el nombre correcto.</p>
+  </div>
+</div>
+
+<pre><code><span class="cmt"># Como garantiza leer TODO</span>
+1. Catalogo AUTO del manual  -> descubre que secciones/arrays existen
+2. Campos CURADOS verificados -> lee cada campo con nombre exacto
+3. Recorre arrays por su .COUNT (o probe si no existe)
+4. Descarta lo que da FNA/error -> robusto al ruido
+5. <span class="fn">verify_scan_coverage</span> -> compara contra el Report nativo de PETEX
+   -> lo que falte se agrega al catalogo curado</code></pre>
+
+<p class="lead">Cobertura actual: <strong>PROSPER</strong> 14 arrays + escalares (equipment, IPR multilateral, gas lift, drilling, lithology), <strong>MBAL</strong> tanks/PVT/aquifer/prediction wells, <strong>GAP</strong> todos los nodos (wells, pipes, separators, tanks, pumps, joints, groups).</p>
+
+<!-- ================= COMO SE USA ================= -->
+<h2><span class="n">6</span> Instalacion</h2>
+
+<pre><code><span class="cmt"># 1. Instalar dependencias</span>
+pip install <span class="str">"mcp[cli]"</span> openserver
+
+<span class="cmt"># 2. Copiar la config a Kiro (.kiro/settings/mcp.json)</span>
+<span class="cmt">#    Contenido en: mcp_config_para_kiro.json</span></code></pre>
+
+<pre><code><span class="kw">{</span>
+  <span class="str">"mcpServers"</span>: {
+    <span class="str">"petex"</span>: {
+      <span class="str">"command"</span>: <span class="str">"C:/ProgramData/Anaconda3/python.exe"</span>,
+      <span class="str">"args"</span>: [<span class="str">"...ruta.../petex_mcp_server.py"</span>],
+      <span class="str">"disabled"</span>: false,
+      <span class="str">"autoApprove"</span>: [<span class="str">"check_licenses"</span>, <span class="str">"prosper_get_recommendations"</span>, <span class="str">"lookup_variable"</span>]
+    }
+  }
+<span class="kw">}</span></code></pre>
+
+<h2><span class="n">7</span> Las 14 tools disponibles</h2>
+<p class="lead">Una vez configurado, Kiro puede invocar estas tools en lenguaje natural. Las marcadas "sin licencia" funcionan siempre, incluso si el pool de OpenServer esta agotado.</p>
+
+<div class="tool">
+  <span class="tool-name">check_licenses()</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <p>Diagnostica que apps (PROSPER/MBAL/GAP) estan disponibles ahora. Distingue app ocupada vs pool agotado.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">prosper_get_recommendations(formation, fluid)</span>
+  <span class="tool-lic lic-no">sin licencia</span>
+  <p>Consulta la knowledge base de ingenieria: que correlacion VLP e IPR usar segun formacion. Ej: "vaca_muerta", "oil".</p>
+</div>
+<div class="tool">
+  <span class="tool-name">lookup_variable(description)</span>
+  <span class="tool-lic lic-no">sin licencia</span>
+  <p>Devuelve el nombre correcto de una variable OpenServer. Ej: "geothermal temperature" -&gt; GEO.DATA[i].TMP.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">prosper_open(filepath)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <p>Abre un modelo PROSPER (.Out) para operar. Mantiene la sesion viva para las siguientes tools.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">prosper_run_nodal(whp, correlation, water_cut, gor)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <p>Corre nodal analysis y devuelve el caudal operativo. Requiere prosper_open primero.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">mbal_create_reservoir(...)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <p>Crea un reservorio MBAL con PVT, presion, OOIP. Lo valida con MBAL.MB.VALIDATE (sin GUI).</p>
+</div>
+<div class="tool">
+  <span class="tool-name">gap_build_network(...)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <p>Arma una red: pozo (de PROSPER) -&gt; flowline -&gt; separador. Opcional: conecta tank MBAL. Variables verificadas en vivo.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">gap_solve(filepath, separator_name)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <p>Resuelve una red GAP y devuelve caudales de oil, gas y agua del separador.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">search_docs(question, source)</span>
+  <span class="tool-lic lic-no">sin licencia</span>
+  <span class="tag-new">RAG</span>
+  <p>Busca en la documentacion PETEX (4976 chunks de los 4 manuales + hallazgos) para responder cualquier duda sobre variables, comandos o procedimientos. Filtro opcional por fuente.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">show_learned_corrections()</span>
+  <span class="tool-lic lic-no">sin licencia</span>
+  <span class="tag-new">APRENDIZAJE</span>
+  <p>Muestra las correcciones de variables que el MCP tiene: las verificadas (semilla) y las que aprendio solo via RAG durante el uso. Refleja como el MCP mejora con el tiempo.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">build_integrated_model(formation, fluid, target_rate, ..., execute)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <span class="tag-new">ORQUESTADOR</span>
+  <p>El comando de alto nivel: a partir de una intencion (formacion, fluido, target), consulta la KB de ingenieria, elige correlaciones y PVT, arma el plan PROSPER-MBAL-GAP y lo ejecuta con auto-correccion. Por defecto hace dry-run (muestra el plan) para revisar antes de correr.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">scan_model(filepath, mode)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <span class="tag-new">ESCANER</span>
+  <p>Lee un modelo existente (.Out/.gap/.mbi) y devuelve el inventario COMPLETO de todos sus componentes. mode="full" recorre el catalogo exhaustivo del manual (IPR incl. multilateral, gas lift, equipment, drilling, todos los nodos GAP); "readable" da lectura limpia con labels; "both" ambos.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">set_parameter(filepath, variable, value)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <span class="tag-new">ESCANER</span>
+  <p>Modifica cualquier parametro de un modelo y lo guarda. Usa auto-correccion: si el nombre no es exacto, lo corrige via cache/RAG. Ej: cambiar presion de separador, skin, OOIP.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">verify_scan_coverage(filepath)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <span class="tag-new">ESCANER</span>
+  <p>Valida la cobertura del escaner: reporta que secciones leyo y guia para comparar contra el Report nativo de PETEX. Garantiza que no se escape ningun componente.</p>
+</div>
+
+<h2><span class="n">8</span> Ejemplos de uso en Kiro</h2>
+<div class="grid grid-3">
+  <div class="card">
+    <h4>Consulta de ingenieria</h4>
+    <p>"Que correlacion uso para un pozo de Vaca Muerta con petroleo?"</p>
+    <p style="margin-top:8px;color:var(--green)">-&gt; prosper_get_recommendations</p>
+  </div>
+  <div class="card">
+    <h4>Nodal analysis</h4>
+    <p>"Abri el APO-135 y corre el nodal a 200 psi de WHP"</p>
+    <p style="margin-top:8px;color:var(--green)">-&gt; prosper_open + prosper_run_nodal</p>
+  </div>
+  <div class="card">
+    <h4>Red de superficie</h4>
+    <p>"Arma una red conectando este pozo a un separador de 200 psi a 3 km"</p>
+    <p style="margin-top:8px;color:var(--green)">-&gt; gap_build_network + gap_solve</p>
+  </div>
+  <div class="card" style="border-color:rgba(63,185,80,.4)">
+    <h4>Modelo integrado (orquestador)</h4>
+    <p>"Arma el modelo completo de un pozo horizontal de Vaca Muerta de 4000m para 200 m3/d"</p>
+    <p style="margin-top:8px;color:var(--green)">-&gt; build_integrated_model (elige correlaciones, PVT y arma todo)</p>
+  </div>
+  <div class="card" style="border-color:rgba(88,166,255,.4)">
+    <h4>Duda sobre la documentacion</h4>
+    <p>"Como corro una prediccion step by step en GAP?"</p>
+    <p style="margin-top:8px;color:var(--blue)">-&gt; search_docs (busca en los manuales)</p>
+  </div>
+  <div class="card" style="border-color:rgba(188,140,255,.4)">
+    <h4>Ver que aprendio el MCP</h4>
+    <p>"Que correcciones de variables aprendiste?"</p>
+    <p style="margin-top:8px;color:var(--purple)">-&gt; show_learned_corrections</p>
+  </div>
+  <div class="card" style="border-color:rgba(88,166,255,.4)">
+    <h4>Escanear un modelo</h4>
+    <p>"Escanea el APO-135 y decime que separadores, VLP e IPR tiene"</p>
+    <p style="margin-top:8px;color:var(--blue)">-&gt; scan_model (inventario completo)</p>
+  </div>
+  <div class="card" style="border-color:rgba(63,185,80,.4)">
+    <h4>Modificar un parametro</h4>
+    <p>"Cambia la presion del separador SEP1 a 150 psi"</p>
+    <p style="margin-top:8px;color:var(--green)">-&gt; set_parameter (con auto-correccion)</p>
+  </div>
+</div>
+
+<h2><span class="n">9</span> Estructura del repo</h2>
+<table>
+  <tr><th>Archivo</th><th>Descripcion</th></tr>
+  <tr><td class="mono">petex_mcp_server.py</td><td>El MCP server (FastMCP, 11 tools)</td></tr>
+  <tr><td class="mono">petex_rag.py</td><td>Motor RAG (indexa + consulta los manuales)</td></tr>
+  <tr><td class="mono">petex_corrections.py</td><td>Cache de correcciones (semilla + aprendidas)</td></tr>
+  <tr><td class="mono">petex_executor.py</td><td>SmartExecutor con auto-correccion y aprendizaje</td></tr>
+  <tr><td class="mono">petex_orchestrator.py</td><td>Orquestador end-to-end (KB -&gt; plan -&gt; ejecucion)</td></tr>
+  <tr><td class="mono">petex_scanner.py</td><td>Escaner curado (lectura legible con labels)</td></tr>
+  <tr><td class="mono">petex_scanner_full.py</td><td>Escaner exhaustivo (catalogo completo del manual)</td></tr>
+  <tr><td class="mono">petex_catalog.json</td><td>Catalogo de variables auto-extraido del manual</td></tr>
+  <tr><td class="mono">catalog_fields_curated.json</td><td>Campos verificados de cada array (sin ruido)</td></tr>
+  <tr><td class="mono">corrections_seed.json</td><td>16 correcciones verificadas + read-only</td></tr>
+  <tr><td class="mono">mcp_petex_v2_prototype.py</td><td>Funciones de workflow reutilizables</td></tr>
+  <tr><td class="mono">wait_for_mbal.py</td><td>Script que espera licencia y ejecuta auto</td></tr>
+  <tr><td class="mono">mcp_config_para_kiro.json</td><td>Config lista para copiar a Kiro</td></tr>
+  <tr><td class="mono">MCP_PETEX_Hallazgos.md</td><td>Todos los hallazgos y correcciones</td></tr>
+  <tr><td class="mono">mcp_petex_*_variables.md</td><td>Variables PROSPER / MBAL / GAP verificadas</td></tr>
+  <tr><td class="mono">mcp_petex_workflows.md</td><td>Secuencias paso a paso</td></tr>
+  <tr><td class="mono">mcp_petex_design.md</td><td>Arquitectura general</td></tr>
+  <tr><td class="mono">knowledge_base/</td><td>KB de ingenieria (correlaciones, PVT, reglas)</td></tr>
+  <tr><td class="mono">roadmap_mcp_petex.html</td><td>Roadmap visual de las 4 fases</td></tr>
+</table>
+
+<footer>
+  <p>MCP PETEX v2 &mdash; UDS Pan Energy &mdash; Agosto 2026</p>
+  <p style="margin-top:4px">PROSPER &bull; MBAL &bull; GAP &bull; IPM 13.5 &bull; OpenServer &bull; FastMCP</p>
+</footer>
+
+</div>
+</body>
+</html>

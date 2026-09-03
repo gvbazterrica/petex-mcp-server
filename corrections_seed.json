@@ -1,0 +1,28 @@
+{
+  "_description": "Correcciones de variables OpenServer verificadas contra IPM 13.5. El MCP arranca con estas y agrega las que aprende via RAG. Patron [i] = cualquier indice numerico. null = variable no existe.",
+  "_version": "1.0",
+  "corrections": {
+    "PROSPER.PVT.Input.Salinity": null,
+    "PROSPER.SIN.EQP.Geo.Data[i].TVD": "PROSPER.SIN.EQP.GEO.DATA[i].MD",
+    "PROSPER.SIN.EQP.Geo.Data[i].Temp": "PROSPER.SIN.EQP.GEO.DATA[i].TMP",
+    "PROSPER.SIN.EQP.Geo.Data[i].Temperature": "PROSPER.SIN.EQP.GEO.DATA[i].TMP",
+    "PROSPER.SIN.EQP.Geo.Uval": "PROSPER.SIN.EQP.GEO.HTC",
+    "PROSPER.SIN.EQP.Geo.Uvalue": "PROSPER.SIN.EQP.GEO.HTC",
+    "PROSPER.SIN.IPR.Single.HzLength": "PROSPER.SIN.IPR.Single.WellLen",
+    "PROSPER.SIN.IPR.Single.HzPermRatio": null,
+    "PROSPER.SIN.IPR.Single.Temp": null,
+    "PROSPER.ANL.SYS.Temp": null,
+    "PROSPER.ANL.SYS.NodePosition": null,
+    "PROSPER.ANL.SYS.WHT": null,
+    "GAP.MOD[i].WELL[i].PROSPERFile": "GAP.MOD[i].WELL[i].File",
+    "GAP.MOD[i].PIPE[i].Length": "GAP.MOD[i].PIPE[i].Desc[0].Length",
+    "GAP.MOD[i].PIPE[i].Diameter": "GAP.MOD[i].PIPE[i].Desc[0].ID",
+    "GAP.MOD[i].SEP[i].MAXPRES": "GAP.MOD[i].SEP[i].SolverPres[0]"
+  },
+  "read_only": [
+    "PROSPER.SIN.EQP.DEVN.DATA.COUNT",
+    "PROSPER.SIN.EQP.DOWN.DATA.COUNT",
+    "PROSPER.SIN.EQP.SURF.DATA.COUNT",
+    "PROSPER.SIN.EQP.GEO.DATA.COUNT"
+  ]
+}

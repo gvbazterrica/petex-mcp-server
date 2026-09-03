@@ -1,0 +1,568 @@
+{
+ "PROSPER": {
+  "scalars": [
+   "PROSPER.PVT.CORREL.CONZFACT.NUM",
+   "PROSPER.PVT.CORREL.GASZFACT.NUM",
+   "PROSPER.PVT.CORREL.GASZFACT[I].S",
+   "PROSPER.PVT.Input.Api",
+   "PROSPER.PVT.Input.PBcorr",
+   "PROSPER.PVT.Input.Pres",
+   "PROSPER.PVT.Input.Solgor",
+   "PROSPER.PVT.Input.Solgor.Unitname",
+   "PROSPER.PVT.Input.Tres",
+   "PROSPER.PVT.Input.WGRmin",
+   "PROSPER.SIN.E",
+   "PROSPER.SIN.EQP.DB.C",
+   "PROSPER.SIN.EQP.DEVN.M",
+   "PROSPER.SIN.EQP.DOWN.DATA.C",
+   "PROSPER.SIN.EQP.DRILL.C",
+   "PROSPER.SIN.EQP.DRILL.DATA.C",
+   "PROSPER.SIN.EQP.DRILL.P",
+   "PROSPER.SIN.EQP.Devn.Filter",
+   "PROSPER.SIN.EQP.ENV.A",
+   "PROSPER.SIN.EQP.Env.Dep",
+   "PROSPER.SIN.EQP.Env.Seabed",
+   "PROSPER.SIN.EQP.GEO.DATA.C",
+   "PROSPER.SIN.EQP.GEO.M",
+   "PROSPER.SIN.EQP.Gauge.Data.C",
+   "PROSPER.SIN.EQP.LITHO.DATA.C",
+   "PROSPER.SIN.EQP.SHC.C",
+   "PROSPER.SIN.EQP.SURF.H",
+   "PROSPER.SIN.EQP.TEMP.M",
+   "PROSPER.SIN.EQP.TOWN.DATA.C",
+   "PROSPER.SIN.EQP.TURF.DATA.C",
+   "PROSPER.SIN.ESP.D",
+   "PROSPER.SIN.ESP.DepthPumpdepth",
+   "PROSPER.SIN.ESP.Des",
+   "PROSPER.SIN.ESP.Frequency",
+   "PROSPER.SIN.ESP.GDRflagGasde",
+   "PROSPER.SIN.ESP.PIPE",
+   "PROSPER.SIN.ESP.PipeLabel",
+   "PROSPER.SIN.ESP.T",
+   "PROSPER.SIN.ESP.W",
+   "PROSPER.SIN.FRM.NumPumps",
+   "PROSPER.SIN.GLF.C",
+   "PROSPER.SIN.GLF.G",
+   "PROSPER.SIN.GLF.Max",
+   "PROSPER.SIN.GLF.Method",
+   "PROSPER.SIN.GLF.Valve",
+   "PROSPER.SIN.HSP.D",
+   "PROSPER.SIN.HSP.Des",
+   "PROSPER.SIN.HSP.GDRflagGasde",
+   "PROSPER.SIN.HSP.Pipe",
+   "PROSPER.SIN.HSP.PipeLabel",
+   "PROSPER.SIN.HSP.Pump",
+   "PROSPER.SIN.HSP.Tubing",
+   "PROSPER.SIN.HSP.TubingLabel",
+   "PROSPER.SIN.HSP.W",
+   "PROSPER.SIN.HSP.Wear",
+   "PROSPER.SIN.I",
+   "PROSPER.SIN.IPR.MULTILAT.BRANCH.COUNTNo.ofbranchesi",
+   "PROSPER.SIN.IPR.MULTILAT.C",
+   "PROSPER.SIN.IPR.MULTILAT.COND",
+   "PROSPER.SIN.IPR.MULTILAT.LAYER.C",
+   "PROSPER.SIN.IPR.MULTILAT.M",
+   "PROSPER.SIN.IPR.MULTILAT.NETWORK.COUNT",
+   "PROSPER.SIN.IPR.MULTILAT.P",
+   "PROSPER.SIN.IPR.MULTILAT.R",
+   "PROSPER.SIN.IPR.MULTILAT.SEGMENT.C",
+   "PROSPER.SIN.IPR.MULTILAT.VIEW.COUNTNo.ofviewobjecttypesi",
+   "PROSPER.SIN.IPR.SINGLE.C",
+   "PROSPER.SIN.IPR.SINGLE.D",
+   "PROSPER.SIN.IPR.SINGLE.DFACTMETHOD",
+   "PROSPER.SIN.IPR.SINGLE.E",
+   "PROSPER.SIN.IPR.SINGLE.F",
+   "PROSPER.SIN.IPR.SINGLE.FLUIDFluidchoice",
+   "PROSPER.SIN.IPR.SINGLE.G",
+   "PROSPER.SIN.IPR.SINGLE.GAPFLAG",
+   "PROSPER.SIN.IPR.SINGLE.I",
+   "PROSPER.SIN.IPR.SINGLE.ICONEGas",
+   "PROSPER.SIN.IPR.SINGLE.M",
+   "PROSPER.SIN.IPR.SINGLE.MLAYER",
+   "PROSPER.SIN.IPR.SINGLE.MLAYER.PRESSUREis",
+   "PROSPER.SIN.IPR.SINGLE.N",
+   "PROSPER.SIN.IPR.SINGLE.NDARCYNon",
+   "PROSPER.SIN.IPR.SINGLE.NVALExponent",
+   "PROSPER.SIN.IPR.SINGLE.O",
+   "PROSPER.SIN.IPR.SINGLE.OILRLKOilend",
+   "PROSPER.SIN.IPR.SINGLE.P",
+   "PROSPER.SIN.IPR.SINGLE.PERMMETHOD",
+   "PROSPER.SIN.IPR.SINGLE.POISSONPoisson",
+   "PROSPER.SIN.IPR.SINGLE.PRES",
+   "PROSPER.SIN.IPR.SINGLE.R",
+   "PROSPER.SIN.IPR.SINGLE.S",
+   "PROSPER.SIN.IPR.SINGLE.SKINAIDE.CRUSHED5Crushed",
+   "PROSPER.SIN.IPR.SINGLE.SKINAIDE.FLOWMODFlowmodel",
+   "PROSPER.SIN.IPR.SINGLE.SKINAIDE.G",
+   "PROSPER.SIN.IPR.SINGLE.SKINAIDE.P",
+   "PROSPER.SIN.IPR.SINGLE.SKINAIDE.SKINMODSkinmodel",
+   "PROSPER.SIN.IPR.SINGLE.T",
+   "PROSPER.SIN.IPR.SINGLE.W",
+   "PROSPER.SIN.IPR.SINGLE.WBR",
+   "PROSPER.SIN.IPR.SINGLE.WBRWell",
+   "PROSPER.SIN.IPR.SINGLE.WELLTYPE",
+   "PROSPER.SIN.IPR.SINGLE.Y",
+   "PROSPER.SIN.IPR.Single.C",
+   "PROSPER.SIN.IPR.Single.CompMethod",
+   "PROSPER.SIN.IPR.Single.Deviation",
+   "PROSPER.SIN.IPR.Single.MGSkinMethod",
+   "PROSPER.SIN.IPR.Single.MLayer",
+   "PROSPER.SIN.IPR.Single.O",
+   "PROSPER.SIN.IPR.Single.OTBETAOutside",
+   "PROSPER.SIN.IPR.Single.Phasing",
+   "PROSPER.SIN.IPR.Single.Pres.UNITMIN",
+   "PROSPER.SIN.IPR.Single.Pres.UNITMINPROSPER.ANL.SYS.Pres.UNITMIN",
+   "PROSPER.SIN.IPR.Single.S",
+   "PROSPER.SIN.IPR.Single.SKinAide.P",
+   "PROSPER.SIN.IPR.Single.SPOTMain.ACTIVITYActivity",
+   "PROSPER.SIN.IPR.Single.SPOTMain.C",
+   "PROSPER.SIN.IPR.Single.SPOTMain.E",
+   "PROSPER.SIN.IPR.Single.SPOTMain.G",
+   "PROSPER.SIN.IPR.Single.SPOTMain.I",
+   "PROSPER.SIN.IPR.Single.SPOTMain.L",
+   "PROSPER.SIN.IPR.Single.SPOTMain.P",
+   "PROSPER.SIN.IPR.Single.SPOTMain.S",
+   "PROSPER.SIN.IPR.Single.SPOTMain.U",
+   "PROSPER.SIN.IPR.Single.Spf",
+   "PROSPER.SIN.IPR.Single.TestData.C",
+   "PROSPER.SIN.IPR.Single.W",
+   "PROSPER.SIN.IPR.Single.WellLen",
+   "PROSPER.SIN.JET.D",
+   "PROSPER.SIN.PCP.D",
+   "PROSPER.SIN.PCP.Pipe",
+   "PROSPER.SIN.PCP.PipeLabel",
+   "PROSPER.SIN.PCP.Tubing",
+   "PROSPER.SIN.PCP.TubingLabel",
+   "PROSPER.SIN.SRP.D",
+   "PROSPER.SIN.SUM.C",
+   "PROSPER.SIN.SUM.COMMENTS",
+   "PROSPER.SIN.SUM.DATE",
+   "PROSPER.SIN.SUM.E",
+   "PROSPER.SIN.SUM.FLOWTYFlowType",
+   "PROSPER.SIN.SUM.FLOWTYPE",
+   "PROSPER.SIN.SUM.FLUIDFluidType",
+   "PROSPER.SIN.SUM.Fluid",
+   "PROSPER.SIN.SUM.G",
+   "PROSPER.SIN.SUM.H",
+   "PROSPER.SIN.SUM.L",
+   "PROSPER.SIN.SUM.O",
+   "PROSPER.SIN.SUM.P",
+   "PROSPER.SIN.SUM.PVTMODEL",
+   "PROSPER.SIN.SUM.PVTMODELPVTModel",
+   "PROSPER.SIN.SUM.R",
+   "PROSPER.SIN.SUM.S",
+   "PROSPER.SIN.SUM.T",
+   "PROSPER.SIN.SUM.WELLTYPEWellType",
+   "PROSPER.SIN.SUMroot.Thelastthreevariables"
+  ],
+  "arrays": {
+   "PROSPER.PVT.CORREL.CONCGR.F[i]": [
+    "Produced"
+   ],
+   "PROSPER.PVT.CORREL.CONDEWPNT.F[i]": [
+    "Dew"
+   ],
+   "PROSPER.PVT.CORREL.CONGASFVF.F[i]": [
+    "Bgith"
+   ],
+   "PROSPER.PVT.CORREL.CONGASVIS[i]": [
+    "NUM",
+    "STD"
+   ],
+   "PROSPER.PVT.CORREL.CONGASVIS[i].F[i]": [],
+   "PROSPER.PVT.CORREL.CONZFACT.F[i]": [
+    "Z"
+   ],
+   "PROSPER.PVT.CORREL.GASGASFVF[i].F[i]": [
+    "Bgith"
+   ],
+   "PROSPER.PVT.CORREL.GASGASVIS[i]": [
+    "NUM",
+    "STD"
+   ],
+   "PROSPER.PVT.CORREL.GASGASVIS[i].F[i]": [],
+   "PROSPER.PVT.CORREL.OILBUBPNT[i]": [
+    "NUM",
+    "S"
+   ],
+   "PROSPER.PVT.CORREL.OILBUBPNT[i].F[i]": [
+    "Pbith"
+   ],
+   "PROSPER.PVT.CORREL.OILOILFVF[i].F[i]": [
+    "Boith"
+   ],
+   "PROSPER.PVT.CORREL.OILOILVIS[i]": [
+    "NUM",
+    "S"
+   ],
+   "PROSPER.PVT.CORREL.OILOILVIS[i].F[i]": [],
+   "PROSPER.PVT.CORREL.OILSOLGOR[i].F[i]": [
+    "Rsith"
+   ],
+   "PROSPER.SIN.EQP.DB.FLUID[i]": [
+    "L"
+   ],
+   "PROSPER.SIN.EQP.DB.INSUL[i]": [
+    "L"
+   ],
+   "PROSPER.SIN.EQP.DB.PIPE[i]": [
+    "L"
+   ],
+   "PROSPER.SIN.EQP.DB.ROCK[i].LABELNamePROSPER.SIN.EQP.DB.ROCK[i]": [
+    "D"
+   ],
+   "PROSPER.SIN.EQP.DOWN.DATA[i]": [
+    "CIR2Casing",
+    "L",
+    "M"
+   ],
+   "PROSPER.SIN.EQP.DRILL.CFGPRES[i]": [
+    "Noof"
+   ],
+   "PROSPER.SIN.EQP.DRILL.CFGTAB[i]": [],
+   "PROSPER.SIN.EQP.DRILL.CFLPRES[i]": [
+    "Noof"
+   ],
+   "PROSPER.SIN.EQP.DRILL.CFLTAB[i]": [],
+   "PROSPER.SIN.EQP.DRILL.DATA[i]": [
+    "C",
+    "L"
+   ],
+   "PROSPER.SIN.EQP.Devn.Data[i]": [
+    "Md"
+   ],
+   "PROSPER.SIN.EQP.Devn.FilMSD[i]": [
+    "Filtered"
+   ],
+   "PROSPER.SIN.EQP.Devn.RawMSD[i]": [
+    "Measureddepth"
+   ],
+   "PROSPER.SIN.EQP.ENV.SGTMP[i]": [
+    "Temperature"
+   ],
+   "PROSPER.SIN.EQP.GEO.DATA[i]": [
+    "M"
+   ],
+   "PROSPER.SIN.EQP.Gauge.Data[i]": [
+    "Depth"
+   ],
+   "PROSPER.SIN.EQP.LITHO.DATA[i]": [
+    "F",
+    "SALINITYSalinity"
+   ],
+   "PROSPER.SIN.EQP.SURF.DATA[i]": [
+    "L"
+   ],
+   "PROSPER.SIN.EQP.TEMP.DATA[i]": [
+    "T"
+   ],
+   "PROSPER.SIN.EQP.TOWN.DATA[i]": [
+    "L"
+   ],
+   "PROSPER.SIN.EQP.TOWN.DATA[i].INSUL[i]": [
+    "T"
+   ],
+   "PROSPER.SIN.EQP.TURF.DATA[i]": [
+    "L"
+   ],
+   "PROSPER.SIN.EQP.TURF.DATA[i].INSUL[i]": [
+    "T"
+   ],
+   "PROSPER.SIN.FRM.Input[i]": [
+    "Poweravailable"
+   ],
+   "PROSPER.SIN.GLF.Depth[i]": [
+    "Valveposition"
+   ],
+   "PROSPER.SIN.GLF.GasLiftValve[i]": [
+    "valve"
+   ],
+   "PROSPER.SIN.GLI.Input[i]": [
+    "Surface"
+   ],
+   "PROSPER.SIN.IPR.MULTILAT.BRANCH[i]": [
+    "R"
+   ],
+   "PROSPER.SIN.IPR.MULTILAT.LAYER[i]": [
+    "P"
+   ],
+   "PROSPER.SIN.IPR.MULTILAT.NETWORK[i]": [
+    "A",
+    "CHOKEChokemodel",
+    "D",
+    "FLUIDFluid",
+    "H",
+    "I",
+    "LABELItemlabel",
+    "M",
+    "MASKItemmasked",
+    "METHODIPRmodel",
+    "NODENode",
+    "P",
+    "POSXxposition",
+    "POSYyposition",
+    "S",
+    "T",
+    "TYPETypeofitem",
+    "V",
+    "VALIDItemvalid"
+   ],
+   "PROSPER.SIN.IPR.MULTILAT.NETWORK[i].DEV[i]": [
+    "M"
+   ],
+   "PROSPER.SIN.IPR.MULTILAT.NETWORK[i].EQUIP[i]": [
+    "T"
+   ],
+   "PROSPER.SIN.IPR.MULTILAT.NETWORK[i].PERFS[i]": [
+    "C",
+    "E",
+    "G",
+    "M",
+    "NDARCYFLAGNon",
+    "R",
+    "S"
+   ],
+   "PROSPER.SIN.IPR.MULTILAT.SEGMENT[i]": [
+    "C"
+   ],
+   "PROSPER.SIN.IPR.MULTILAT.VIEW[i]": [],
+   "PROSPER.SIN.IPR.SINGLE.CONEMATCH[i]": [
+    "R"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.EXTENTRY[i]": [
+    "R"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.EXTENTRY[i].PRESSURE[i]": [
+    "Pressureresponsesi"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.HORIZDP[i]": [
+    "I",
+    "IZONSKSkinmodel",
+    "IZONTPZonetype",
+    "P",
+    "WBRWell",
+    "Z"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.MLAYDP[i]": [
+    "IGPACKGravelpack",
+    "ISKINSkinmodel",
+    "M",
+    "MODELIPRmodel",
+    "OILRLKOilend",
+    "P",
+    "S",
+    "TYPETypeoflayer",
+    "W"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.MLAYDP[i].MRATE[i]": [
+    "P"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.MLAYER[i]": [
+    "A",
+    "I",
+    "P",
+    "PRESSURE",
+    "TYPELayertype"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.MLAYER[i].MRATE[i]": [
+    "P"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.MRate[i]": [
+    "Pressure",
+    "Rate",
+    "RateTestratei"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.RELPTEST[i]": [
+    "T"
+   ],
+   "PROSPER.SIN.IPR.SINGLE.SENVAR[i]": [],
+   "PROSPER.SIN.IPR.SINGLE.TESTDATA[i]": [
+    "Q"
+   ],
+   "PROSPER.SIN.IPR.Single.HorizdP[i]": [
+    "ZONLEN"
+   ],
+   "PROSPER.SIN.IPR.Single.PerfInts[i]": [
+    "M",
+    "T"
+   ],
+   "PROSPER.SIN.IPR.Single.RTLIST[i]": [
+    "Total"
+   ],
+   "PROSPER.SIN.IPR.Single.SPOTMain.COMPLETION[i]": [
+    "BOTTOMi",
+    "ODi",
+    "TOPi",
+    "TYPEType",
+    "WEIGHTi"
+   ],
+   "PROSPER.SIN.IPR.Single.SPOTMain.LAYERS[i]": [
+    "G",
+    "O",
+    "W"
+   ],
+   "PROSPER.SIN.IPR.Single.SPOTMain.LOGDATA[i]": [
+    "PERMEABILITYi",
+    "POROSITYi",
+    "TWCi",
+    "UCSi"
+   ],
+   "PROSPER.SIN.JET.Input[i]": [
+    "Pumpdepth"
+   ],
+   "PROSPER.SIN.JET.LossCoef[i]": [],
+   "PROSPER.SIN.PCP.Input[i]": [
+    "Cablelength",
+    "Pumpdepth"
+   ],
+   "PROSPER.SIN.SRP.Input[i]": [
+    "Anchoredtubing",
+    "Annulusarea",
+    "Efficiency",
+    "Intake",
+    "Maximum",
+    "Method",
+    "PlungerDiameter",
+    "Servicefactor",
+    "Surfacestrokelength",
+    "Wellheadtemperature"
+   ],
+   "PROSPER.SIN.SRP.Input[i]PumpSpeedPROSPER.SIN.SRP.Input[i]": [
+    "Target"
+   ],
+   "PROSPER.SIN.SRP.Input[i]PumpdepthPROSPER.SIN.SRP.Input[i]": [
+    "Pumpdiameter"
+   ],
+   "PROSPER.SIN.SRP.Input[i]RodtypePROSPER.SIN.SRP.Input[i]": [
+    "Rodnumber"
+   ],
+   "PROSPER.SIN.SUM.LIFTTYPE[i]": [
+    "Lift"
+   ]
+  }
+ },
+ "MBAL": {
+  "scalars": [
+   "MBAL.MB.BREAKLINK",
+   "MBAL.MB.CURRENTPREDTIME",
+   "MBAL.MB.ENDPRED",
+   "MBAL.MB.IMPORTMBV",
+   "MBAL.MB.IMPORTTPD",
+   "MBAL.MB.LINKITEMS",
+   "MBAL.MB.NEXTSTEPPRED",
+   "MBAL.MB.PRED.S",
+   "MBAL.MB.PREDFINISHED",
+   "MBAL.MB.PVT.INPUT.C",
+   "MBAL.MB.PVT.INPUT.IMPORT",
+   "MBAL.MB.PVT.INPUT.MATCHALL",
+   "MBAL.MB.PVT.INPUT.MATCHCURRENT",
+   "MBAL.MB.REGRESSTANKHIST",
+   "MBAL.MB.RUNPREDICTION",
+   "MBAL.MB.STARTPRED",
+   "MBAL.MB.SaveHist",
+   "MBAL.MB.SavePred",
+   "MBAL.MB.TANK.COUNT",
+   "MBAL.MB.TANK.O",
+   "MBAL.MB.TANK.OOIP",
+   "MBAL.MB.TANK.OOIPFirstoilrate",
+   "MBAL.MB.TANK.POROSITY",
+   "MBAL.MB.TANK.PRODHIST.ADD",
+   "MBAL.MB.TANK.PRODHIST.RESET",
+   "MBAL.MB.TANK.PRODHIST.SORT",
+   "MBAL.MB.TANK.PV.NDIM"
+  ],
+  "arrays": {
+   "MBAL.MB.LEAK[i]": [],
+   "MBAL.MB.PREDWELL[i]": [],
+   "MBAL.MB.PVT.INPUT[i]": [
+    "C",
+    "IMPORT"
+   ],
+   "MBAL.MB.TANK.PRODHIST[i]": [
+    "CUMGAS",
+    "CUMOIL",
+    "DELETE",
+    "INSERT",
+    "PRESS",
+    "TIME"
+   ],
+   "MBAL.MB.TANK.PV.DIMSIZE[i]": [],
+   "MBAL.MB.TANK.PV[i]": [],
+   "MBAL.MB.TANK[i]": [
+    "O",
+    "PRESS"
+   ],
+   "MBAL.MB.TANK[i].PRODHIST[i]": [
+    "C"
+   ],
+   "MBAL.MB.TRES[i]": [],
+   "MBAL.MB[i]": [
+    "REFDATENOTE"
+   ],
+   "MBAL.MB[i].PVT.SETUP.PTS[i]": [
+    "ADDCONNECTION",
+    "ADDEQUIPMENT",
+    "EXPORT",
+    "IMPORT",
+    "R",
+    "REMOVECONNECTION",
+    "REMOVEEQUIPMENT",
+    "RENAME",
+    "U"
+   ],
+   "MBAL.MB[i].TRES[i]": []
+  }
+ },
+ "GAP": {
+  "scalars": [],
+  "arrays": {
+   "GAP.MOD[i]": [
+    "MAXGAS",
+    "MAXQGAS",
+    "SysType"
+   ],
+   "GAP.MOD[i].EQUIP[i]": [
+    "Prp",
+    "T",
+    "k",
+    "prefix"
+   ],
+   "GAP.MOD[i].EQUIP[i].IPR[i]": [
+    "prefix"
+   ],
+   "GAP.MOD[i].EQUIP[i].SCHEDULE[i]": [
+    "D",
+    "T"
+   ],
+   "GAP.MOD[i].FluidList[i]": [
+    "Composition"
+   ],
+   "GAP.MOD[i].GROUP[i]": [],
+   "GAP.MOD[i].GROUP[i].MEMBER[i]": [],
+   "GAP.MOD[i].INFLOW[i]": [],
+   "GAP.MOD[i].PIPE[i]": [
+    "k",
+    "prefixisusedtoread"
+   ],
+   "GAP.MOD[i].PUMP[i]forapumpGAP.MOD[i].COMP[i]": [
+    "foracompressor"
+   ],
+   "GAP.MOD[i].Pipe[i]": [
+    "ENDA"
+   ],
+   "GAP.MOD[i].SCHEDULE[i]": [],
+   "GAP.MOD[i].SEP[i]": [],
+   "GAP.MOD[i].SystemTotal[i]": [
+    "k"
+   ],
+   "GAP.MOD[i].TANK[i]": [],
+   "GAP.MOD[i].WELL[i]": [
+    "MASK",
+    "Transient"
+   ],
+   "GAP.MOD[i].WELL[i].IPR[i]": [
+    "Composition"
+   ]
+  }
+ }
+}

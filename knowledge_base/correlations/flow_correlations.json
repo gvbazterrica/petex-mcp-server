@@ -1,0 +1,74 @@
+{
+  "_description": "Selección de correlaciones VLP/IPR por formación y tipo de fluido",
+  "_source": "Experiencia UDS Pan Energy",
+  
+  "vaca_muerta": {
+    "formation": "Vaca Muerta",
+    "basin": "Neuquina",
+    "vlp_tubing": {
+      "recommended": "PetroleumExperts2",
+      "alternatives": ["PetroleumExperts5", "BeggsandBrill"],
+      "notes": "PE2 es el estándar para pozos horizontales de shale oil en VM. PE5 para alta GOR."
+    },
+    "vlp_pipeline": {
+      "recommended": "PetroleumExperts2",
+      "alternatives": ["BeggsandBrill"],
+      "notes": "Mismo criterio que tubing para flowlines horizontales."
+    },
+    "ipr_model": {
+      "oil": {
+        "recommended": "Vogel",
+        "alternatives": ["Darcy"],
+        "notes": "Vogel para pozos bajo presión de burbuja. Darcy si Pwf > Pb."
+      },
+      "gas_condensate": {
+        "recommended": "C and n",
+        "alternatives": ["Forchheimer"],
+        "notes": "C&n con test de producción. Forchheimer para alta velocidad."
+      }
+    }
+  },
+  
+  "loma_campana": {
+    "formation": "Vaca Muerta - Loma Campana",
+    "basin": "Neuquina",
+    "vlp_tubing": {
+      "recommended": "PetroleumExperts2",
+      "notes": "Validado con datos de campo YPF/Vista."
+    },
+    "ipr_model": {
+      "oil": {
+        "recommended": "Vogel",
+        "notes": "GOR típico 500-1200 scf/stb. Mayoría bajo Pb."
+      }
+    }
+  },
+
+  "mulichinco": {
+    "formation": "Mulichinco",
+    "basin": "Neuquina",
+    "vlp_tubing": {
+      "recommended": "PetroleumExperts2",
+      "alternatives": ["HagedornBrown"],
+      "notes": "Convencional. HB funciona bien en pozos verticales."
+    },
+    "ipr_model": {
+      "oil": {
+        "recommended": "Darcy",
+        "notes": "Reservorio convencional, generalmente sobre Pb."
+      }
+    }
+  },
+
+  "default": {
+    "vlp_tubing": {
+      "recommended": "PetroleumExperts2",
+      "notes": "Default seguro para la mayoría de los casos."
+    },
+    "ipr_model": {
+      "oil": {"recommended": "Vogel"},
+      "gas": {"recommended": "C and n"},
+      "gas_condensate": {"recommended": "C and n"}
+    }
+  }
+}

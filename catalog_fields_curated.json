@@ -1,0 +1,39 @@
+{
+  "_description": "Campos verificados de cada array PETEX (nombres exactos de la doc, sin ruido del PDF). El FullScanner usa esto para los campos y el catalogo auto para descubrir que arrays existen.",
+
+  "PROSPER": {
+    "PROSPER.SIN.EQP.DOWN.DATA[i]": ["LABEL","TYPE","DEPTH","TID","TIR","TOD","TOR","CID","CIR","COD","COR","CID2","CIR2","MULT"],
+    "PROSPER.SIN.EQP.SURF.DATA[i]": ["LABEL","TYPE","LENGTH","TVD","TEMP","ID","ROUGH","MULT","HTC"],
+    "PROSPER.SIN.EQP.Devn.Data[i]": ["Md","Tvd"],
+    "PROSPER.SIN.EQP.GEO.DATA[i]": ["MD","TMP","HTC"],
+    "PROSPER.SIN.EQP.TEMP.DATA[i]": ["TVD","MD","TMP"],
+    "PROSPER.SIN.EQP.DRILL.DATA[i]": ["LABEL","DRILLDEPTH","DIAMETER","SHOEDEPTH","CASINGOD","CASINGWT","CEMENTTOP","CASINGTOP","MUDDENSITY"],
+    "PROSPER.SIN.EQP.LITHO.DATA[i]": ["FORM","BOTTOM","SHALE","POROSITY","PERM","ROCK","FLUID","SALINITY"],
+    "PROSPER.SIN.EQP.Gauge.Data[i]": ["Depth","Label"],
+    "PROSPER.SIN.IPR.MULTILAT.NETWORK[i]": ["FLOWTYPE","ANGLE","WBR","DIETZ"],
+    "PROSPER.SIN.IPR.MULTILAT.NETWORK[i].DEV[i]": ["MD","TVD","AZIMUTH","DISP","ANGLE"],
+    "PROSPER.SIN.IPR.MULTILAT.NETWORK[i].EQUIP[i]": ["TUBTYPE","TUBDEPTH","TUBID","TUBROUGH","TUBTOD","TUBTOR","TUBCID","TUBCIR"],
+    "PROSPER.SIN.IPR.Single.MLAYDP[i]": ["TYPE","MODEL","ISKIN","MD","TVD","PRESSURE","FLOWRAD","GOR","API","GASG","WC","PIENTRY","PERM","DAREA","DIETZ","WBR","SKIN"],
+    "PROSPER.SIN.GLF.Depth[i]": ["value"],
+    "PROSPER.SIN.GLF.GasLiftValve[i]": ["valve"]
+  },
+
+  "MBAL": {
+    "MBAL.MB[i].TANK[i]": ["TYPE","OOIP","OGIP","PRESS","TEMP","POR","CONWAT","PERM","PAYZONE"],
+    "MBAL.MB[i].TANK[i].PRODHIST[i]": ["TIME","PRESS","CUMOIL","CUMGAS","CUMWAT","CUMGASINJ","CUMWATINJ","RECOFF"],
+    "MBAL.MB[i].PREDWELL[i]": ["NAME","TYPE","DISABLED"],
+    "MBAL.MB[i].LEAK[i]": ["NAME","TRANS","TCORR"]
+  },
+
+  "GAP": {
+    "GAP.MOD[i].WELL[i]": ["Label","WellType","File","MASKFLAG"],
+    "GAP.MOD[i].PIPE[i]": ["Label","MASKFLAG"],
+    "GAP.MOD[i].PIPE[i].Desc[i]": ["Length","TVD","ID","Roughness","Tubing","CasingID"],
+    "GAP.MOD[i].SEP[i]": ["Label","SolverPres","MAXQLIQ","MAXQOIL","MAXQGAS","MAXPRES"],
+    "GAP.MOD[i].TANK[i]": ["Label","MBALFile","PRESS"],
+    "GAP.MOD[i].PUMP[i]": ["Label"],
+    "GAP.MOD[i].COMP[i]": ["Label"],
+    "GAP.MOD[i].JOINT[i]": ["Label"],
+    "GAP.MOD[i].GROUP[i]": ["Label"]
+  }
+}
