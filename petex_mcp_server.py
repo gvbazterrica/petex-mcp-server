@@ -600,6 +600,42 @@ def verify_scan_coverage(filepath: str) -> str:
 
 
 @mcp.tool()
+def list_templates() -> str:
+    """Lista las plantillas .Out pre-validadas disponibles (pozos horizontal/vertical,
+    oil/gas). Estas plantillas ya tienen la tubing description validada, por lo que
+    permiten crear modelos PROSPER completos sin el paso manual del Done (blocker)."""
+    from petex_templates import TemplateManager
+    return json.dumps(TemplateManager().list_templates(), indent=2, ensure_ascii=False)
+
+
+@mcp.tool()
+def create_from_template(template_name: str, dest_path: str,
+                         parameters: dict) -> str:
+    """Crea un modelo PROSPER clonando una plantilla pre-validada y ajustando
+    parametros. Evita el blocker de la tubing description porque parte de un
+    equipment ya validado. El resultado esta listo para nodal/VLP/GAP.
+
+    Args:
+        template_name: nombre de la plantilla (ver list_templates)
+        dest_path: ruta destino del nuevo .Out
+        parameters: dict de parametros a ajustar (ej: {"reservoir_pressure": 5500, "api": 35})
+    """
+    from petex_templates import TemplateManager
+    tm = TemplateManager()
+    t = tm.get_template(template_name)
+    if not t:
+        return json.dumps({"error": f"Template '{template_name}' no existe. Ver list_templates."})
+    if not t.get("validado"):
+        return json.dumps({
+            "error": f"La plantilla '{template_name}' aun no fue creada/validada.",
+            "instruccion": "Ver TEMPLATES_README.md para generar el .Out base (paso manual unico con licencia).",
+        }, ensure_ascii=False)
+    ex = _get_exec()
+    result = tm.create_from_template(ex, template_name, dest_path, parameters)
+    return json.dumps(result, indent=2, ensure_ascii=False)
+
+
+@mcp.tool()
 def build_integrated_model(formation: str, fluid: str = "oil",
                            target_rate_m3d: float = 0,
                            lateral_length_m: float = 0,

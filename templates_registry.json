@@ -1,0 +1,62 @@
+{
+  "_description": "Registro de plantillas .Out pre-validadas. Cada plantilla ya tiene la tubing description generada (paso manual unico con licencia), asi el MCP la clona y solo ajusta parametros, evitando el blocker de PROSPER.",
+  "_carpeta_templates": "templates/",
+  "templates": {
+    "horizontal_oil_vm": {
+      "descripcion": "Pozo horizontal Vaca Muerta, oil, surgencia natural, IPR Vogel, VLP PE2",
+      "file": "templates/horizontal_oil_vm.Out",
+      "fluid": "oil",
+      "trajectory": "horizontal",
+      "validado": false,
+      "parametros_ajustables": {
+        "reservoir_pressure": "PROSPER.SIN.IPR.Single.Pres",
+        "skin": "PROSPER.SIN.IPR.Single.Skin",
+        "lateral_length_ft": "PROSPER.SIN.IPR.Single.WellLen",
+        "thickness_ft": "PROSPER.SIN.IPR.Single.Thickness",
+        "api": "PROSPER.PVT.Input.Api",
+        "gas_gravity": "PROSPER.PVT.Input.GrvGas",
+        "gor": "PROSPER.PVT.Input.SolGOR",
+        "reservoir_temp_f": "PROSPER.PVT.Input.Tres",
+        "co2": "PROSPER.PVT.Input.CO2",
+        "n2": "PROSPER.PVT.Input.N2",
+        "vlp_correlation": "PROSPER.ANL.SYS.TubingLabel"
+      }
+    },
+    "vertical_oil_conv": {
+      "descripcion": "Pozo vertical convencional, oil, IPR Darcy, VLP PE2",
+      "file": "templates/vertical_oil_conv.Out",
+      "fluid": "oil",
+      "trajectory": "vertical",
+      "validado": false,
+      "parametros_ajustables": {
+        "reservoir_pressure": "PROSPER.SIN.IPR.Single.Pres",
+        "skin": "PROSPER.SIN.IPR.Single.Skin",
+        "permeability": "PROSPER.SIN.IPR.Single.Perm",
+        "thickness_ft": "PROSPER.SIN.IPR.Single.Thickness",
+        "drainage": "PROSPER.SIN.IPR.Single.Drainage",
+        "api": "PROSPER.PVT.Input.Api",
+        "gas_gravity": "PROSPER.PVT.Input.GrvGas",
+        "gor": "PROSPER.PVT.Input.SolGOR",
+        "reservoir_temp_f": "PROSPER.PVT.Input.Tres",
+        "vlp_correlation": "PROSPER.ANL.SYS.TubingLabel"
+      }
+    },
+    "horizontal_gas_vm": {
+      "descripcion": "Pozo horizontal Vaca Muerta, gas condensado, IPR C and n, VLP PE2",
+      "file": "templates/horizontal_gas_vm.Out",
+      "fluid": "gas_condensate",
+      "trajectory": "horizontal",
+      "validado": false,
+      "parametros_ajustables": {
+        "reservoir_pressure": "PROSPER.SIN.IPR.Single.Pres",
+        "skin": "PROSPER.SIN.IPR.Single.Skin",
+        "lateral_length_ft": "PROSPER.SIN.IPR.Single.WellLen",
+        "api": "PROSPER.PVT.Input.Api",
+        "gas_gravity": "PROSPER.PVT.Input.GrvGas",
+        "cgr": "PROSPER.SIN.IPR.Single.CGR",
+        "reservoir_temp_f": "PROSPER.PVT.Input.Tres",
+        "vlp_correlation": "PROSPER.ANL.SYS.TubingLabel"
+      }
+    }
+  }
+}
