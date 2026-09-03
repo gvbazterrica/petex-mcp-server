@@ -218,6 +218,29 @@ footer{text-align:center;padding:40px 0 0;border-top:1px solid var(--border);mar
 
 <p class="lead">Cobertura actual: <strong>PROSPER</strong> 14 arrays + escalares (equipment, IPR multilateral, gas lift, drilling, lithology), <strong>MBAL</strong> tanks/PVT/aquifer/prediction wells, <strong>GAP</strong> todos los nodos (wells, pipes, separators, tanks, pumps, joints, groups).</p>
 
+<!-- ================= AGENTE AUTONOMO ================= -->
+<h2><span class="n">5b</span> Agente autonomo y cloud (Fases 3-4)</h2>
+<p class="lead">Las ultimas capas convierten al MCP en un agente que aprende de resultados, planifica pads completos y esta listo para la nube.</p>
+
+<div class="grid grid-2">
+  <div class="card" style="border-color:rgba(188,140,255,.4)">
+    <h4 style="color:#bc8cff">Feedback loop</h4>
+    <p>Cada modelo exitoso se registra (parametros + resultados). El agente consulta esos casos para recomendar valores que YA funcionaron y estimar caudales realistas. Aprende de la realidad, no solo de la doc.</p>
+  </div>
+  <div class="card" style="border-color:rgba(63,185,80,.4)">
+    <h4 style="color:var(--green)">Multi-well (pads)</h4>
+    <p>Planifica un pad completo: varios pozos compartiendo manifold y separador. Razona correlaciones/PVT de cada pozo segun su formacion y explica la secuencia antes de ejecutar.</p>
+  </div>
+  <div class="card" style="border-color:rgba(255,123,57,.4)">
+    <h4 style="color:#ff7b39">Cloud-ready (AWS)</h4>
+    <p>El RAG y la KB de ingenieria tienen backend intercambiable: local (offline) o AWS (Bedrock + DynamoDB). Migrar es cambiar una variable de entorno, no reescribir. Ver aws_deployment.html.</p>
+  </div>
+  <div class="card" style="border-color:rgba(88,166,255,.4)">
+    <h4 style="color:var(--blue)">Ejecucion siempre local</h4>
+    <p>OpenServer queda en la maquina del ingeniero (ahi vive la licencia PETEX). Solo el conocimiento migra a la nube y se comparte entre el equipo.</p>
+  </div>
+</div>
+
 <!-- ================= COMO SE USA ================= -->
 <h2><span class="n">6</span> Instalacion</h2>
 
@@ -238,7 +261,7 @@ pip install <span class="str">"mcp[cli]"</span> openserver
   }
 <span class="kw">}</span></code></pre>
 
-<h2><span class="n">7</span> Las 14 tools disponibles</h2>
+<h2><span class="n">7</span> Las 19 tools disponibles</h2>
 <p class="lead">Una vez configurado, Kiro puede invocar estas tools en lenguaje natural. Las marcadas "sin licencia" funcionan siempre, incluso si el pool de OpenServer esta agotado.</p>
 
 <div class="tool">
@@ -317,6 +340,30 @@ pip install <span class="str">"mcp[cli]"</span> openserver
   <span class="tag-new">ESCANER</span>
   <p>Valida la cobertura del escaner: reporta que secciones leyo y guia para comparar contra el Report nativo de PETEX. Garantiza que no se escape ningun componente.</p>
 </div>
+<div class="tool">
+  <span class="tool-name">list_templates() / create_from_template(...)</span>
+  <span class="tool-lic lic-yes">usa licencia</span>
+  <span class="tag-new">TEMPLATES</span>
+  <p>Clona una plantilla .Out pre-validada y ajusta parametros, evitando el blocker de la tubing description de PROSPER. Permite crear modelos completos sin el paso manual del Done.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">record_model_success(...)</span>
+  <span class="tool-lic lic-no">sin licencia</span>
+  <span class="tag-new">AGENTE</span>
+  <p>Registra un modelo que corrio con exito (params + resultados). Cierra el feedback loop: el agente aprende de los modelos reales que funcionaron.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">recommend_from_history(formation, fluid)</span>
+  <span class="tool-lic lic-no">sin licencia</span>
+  <span class="tag-new">AGENTE</span>
+  <p>Recomienda parametros basados en casos exitosos PREVIOS (no solo la KB estatica). Da el rango de caudal observado en modelos que ya funcionaron.</p>
+</div>
+<div class="tool">
+  <span class="tool-name">plan_pad(pad_name, wells, separator_pressure)</span>
+  <span class="tool-lic lic-no">sin licencia</span>
+  <span class="tag-new">AGENTE</span>
+  <p>Planifica un PAD completo (varios pozos + red compartida). Razona correlaciones/PVT de cada pozo y arma la secuencia explicada en lenguaje natural.</p>
+</div>
 
 <h2><span class="n">8</span> Ejemplos de uso en Kiro</h2>
 <div class="grid grid-3">
@@ -360,6 +407,16 @@ pip install <span class="str">"mcp[cli]"</span> openserver
     <p>"Cambia la presion del separador SEP1 a 150 psi"</p>
     <p style="margin-top:8px;color:var(--green)">-&gt; set_parameter (con auto-correccion)</p>
   </div>
+  <div class="card" style="border-color:rgba(63,185,80,.4)">
+    <h4>Planificar un pad completo</h4>
+    <p>"Planifica un pad de 3 pozos horizontales de Vaca Muerta con un separador comun de 200 psi"</p>
+    <p style="margin-top:8px;color:var(--green)">-&gt; plan_pad (razona cada pozo + secuencia)</p>
+  </div>
+  <div class="card" style="border-color:rgba(188,140,255,.4)">
+    <h4>Aprender de resultados</h4>
+    <p>"Que parametros funcionaron antes para pozos de Vaca Muerta?"</p>
+    <p style="margin-top:8px;color:#bc8cff">-&gt; recommend_from_history (feedback loop)</p>
+  </div>
 </div>
 
 <h2><span class="n">9</span> Estructura del repo</h2>
@@ -374,6 +431,13 @@ pip install <span class="str">"mcp[cli]"</span> openserver
   <tr><td class="mono">petex_scanner_full.py</td><td>Escaner exhaustivo (catalogo completo del manual)</td></tr>
   <tr><td class="mono">petex_catalog.json</td><td>Catalogo de variables auto-extraido del manual</td></tr>
   <tr><td class="mono">catalog_fields_curated.json</td><td>Campos verificados de cada array (sin ruido)</td></tr>
+  <tr><td class="mono">petex_templates.py</td><td>Gestor de plantillas .Out (workaround PROSPER)</td></tr>
+  <tr><td class="mono">petex_rag_backend.py</td><td>Abstraccion RAG (local &harr; Bedrock)</td></tr>
+  <tr><td class="mono">petex_kb_backend.py</td><td>Abstraccion KB ingenieria (JSON &harr; DynamoDB)</td></tr>
+  <tr><td class="mono">petex_feedback.py</td><td>Feedback loop (aprende de modelos exitosos)</td></tr>
+  <tr><td class="mono">petex_pad.py</td><td>Multi-well: planifica pads completos</td></tr>
+  <tr><td class="mono">aws_deployment.html</td><td>Arquitectura y guia de deployment AWS</td></tr>
+  <tr><td class="mono">TEMPLATES_README.md</td><td>Como crear las plantillas .Out base</td></tr>
   <tr><td class="mono">corrections_seed.json</td><td>16 correcciones verificadas + read-only</td></tr>
   <tr><td class="mono">mcp_petex_v2_prototype.py</td><td>Funciones de workflow reutilizables</td></tr>
   <tr><td class="mono">wait_for_mbal.py</td><td>Script que espera licencia y ejecuta auto</td></tr>
