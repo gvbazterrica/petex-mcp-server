@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP PETEX - Vision General de la Solucion</title>
+<style>
+:root{
+  --bg:#0b0e14;--card:#151a23;--card2:#1c2430;--border:#2a3340;
+  --blue:#58a6ff;--green:#3fb950;--amber:#d29922;--purple:#bc8cff;--orange:#ff7b39;--cyan:#39d0d8;
+  --text:#e6edf3;--dim:#8b949e;--bright:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:1240px;margin:0 auto;padding:56px 24px}
+
+/* Hero */
+.hero{text-align:center;margin-bottom:64px}
+.hero .eyebrow{font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);font-weight:600;margin-bottom:14px}
+.hero h1{font-size:2.8rem;color:var(--bright);margin-bottom:14px;line-height:1.15}
+.hero .sub{font-size:1.15rem;color:var(--dim);max-width:720px;margin:0 auto 24px}
+.hero .stats{display:flex;gap:36px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.stat{text-align:center}
+.stat .num{font-size:2.2rem;font-weight:700;color:var(--bright)}
+.stat .lbl{font-size:.8rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
+
+/* Que es */
+.section{margin-bottom:64px}
+.section h2{font-size:1.7rem;color:var(--bright);margin-bottom:12px;text-align:center}
+.section .intro{color:var(--dim);text-align:center;max-width:760px;margin:0 auto 36px}
+
+/* Pipeline del cerebro */
+.brain{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:20px}
+@media(max-width:900px){.brain{grid-template-columns:1fr;gap:12px}}
+.brain-step{background:var(--card);border:1px solid var(--border);padding:24px 20px;position:relative}
+.brain-step:not(:last-child)::after{content:'\2192';position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--cyan);font-size:1.4rem;z-index:2;background:var(--bg);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+@media(max-width:900px){.brain-step::after{display:none !important}}
+.brain-step:first-child{border-radius:12px 0 0 12px}
+.brain-step:last-child{border-radius:0 12px 12px 0}
+.brain-step .ico{font-size:1.6rem;margin-bottom:10px}
+.brain-step h4{color:var(--bright);font-size:1rem;margin-bottom:6px}
+.brain-step p{font-size:.84rem;color:var(--dim)}
+
+/* Capacidades cards */
+.caps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.caps{grid-template-columns:1fr}}
+.cap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;transition:border-color .2s}
+.cap .tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.5px;padding:3px 10px;border-radius:5px;margin-bottom:12px}
+.cap h3{color:var(--bright);font-size:1.08rem;margin-bottom:8px}
+.cap p{font-size:.88rem;color:var(--dim);margin-bottom:12px}
+.cap .tools{font-size:.76rem;color:var(--cyan);font-family:'Consolas',monospace}
+.t-exec{background:rgba(88,166,255,.15);color:var(--blue)}
+.t-rag{background:rgba(57,208,216,.15);color:var(--cyan)}
+.t-learn{background:rgba(188,140,255,.15);color:var(--purple)}
+.t-orch{background:rgba(63,185,80,.15);color:var(--green)}
+.t-scan{background:rgba(210,153,34,.15);color:var(--amber)}
+.t-cloud{background:rgba(255,123,57,.15);color:var(--orange)}
+
+/* Fases timeline */
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.phases{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.phases{grid-template-columns:1fr}}
+.ph{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ph.done::before{background:var(--green)}
+.ph.curso::before{background:var(--amber)}
+.ph .st{font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.ph.done .st{color:var(--green)}
+.ph.curso .st{color:var(--amber)}
+.ph h4{color:var(--bright);font-size:1.05rem;margin-bottom:10px}
+.ph ul{list-style:none}
+.ph li{font-size:.82rem;color:var(--text);padding:3px 0 3px 18px;position:relative}
+.ph li::before{content:'\2713';position:absolute;left:0;color:var(--green);font-weight:700}
+.ph li.pend::before{content:'\25cb';color:var(--dim)}
+.ph li.pend{color:var(--dim)}
+
+/* Tools grid */
+.toolgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:800px){.toolgrid{grid-template-columns:1fr}}
+.tl{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.tl .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tl code{font-family:'Consolas',monospace;font-size:.82rem;color:var(--bright)}
+.tl .d{font-size:.78rem;color:var(--dim);margin-left:auto;text-align:right}
+
+/* Estado */
+.estado{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:28px}
+.estado .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.estado .row:last-child{border-bottom:none}
+.estado .ok{color:var(--green);font-weight:600}
+.estado .pend{color:var(--amber);font-weight:600}
+
+footer{text-align:center;padding:44px 0 0;border-top:1px solid var(--border);margin-top:56px;color:var(--dim);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">UDS Pan Energy &bull; IPM 13.5</div>
+  <h1>MCP PETEX</h1>
+  <p class="sub">Un agente que ejecuta PROSPER, MBAL y GAP, consulta la documentacion cuando duda, aprende de sus errores y razona decisiones de ingenieria.</p>
+  <div class="stats">
+    <div class="stat"><div class="num">19</div><div class="lbl">Tools</div></div>
+    <div class="stat"><div class="num">4976</div><div class="lbl">Chunks RAG</div></div>
+    <div class="stat"><div class="num">4/4</div><div class="lbl">Fases</div></div>
+    <div class="stat"><div class="num">3</div><div class="lbl">Apps PETEX</div></div>
+  </div>
+</div>
+
+<!-- QUE HACE - el cerebro -->
+<div class="section">
+  <h2>Como piensa</h2>
+  <p class="intro">De una intencion en lenguaje natural a un modelo ejecutado. El MCP no ejecuta a ciegas: decide, ejecuta, y aprende.</p>
+  <div class="brain">
+    <div class="brain-step">
+      <div class="ico">&#128172;</div>
+      <h4>1. Intencion</h4>
+      <p>"Pozo horizontal de Vaca Muerta, 200 m3/d, separador a 200 psi"</p>
+    </div>
+    <div class="brain-step">
+      <div class="ico">&#129504;</div>
+      <h4>2. Decision</h4>
+      <p>Consulta la KB y casos previos: elige VLP=PE2, IPR=Vogel, PVT tipico</p>
+    </div>
+    <div class="brain-step">
+      <div class="ico">&#9881;</div>
+      <h4>3. Ejecucion</h4>
+      <p>Arma PROSPER-MBAL-GAP. Si una variable falla, consulta el RAG y corrige</p>
+    </div>
+    <div class="brain-step">
+      <div class="ico">&#128218;</div>
+      <h4>4. Aprendizaje</h4>
+      <p>Guarda la correccion y el modelo exitoso. La proxima vez ya lo sabe</p>
+    </div>
+  </div>
+</div>
+
+<!-- CAPACIDADES -->
+<div class="section">
+  <h2>Las 6 capacidades</h2>
+  <p class="intro">Cada capa suma inteligencia. Juntas hacen al MCP un asistente de ingenieria de produccion, no un simple wrapper.</p>
+  <div class="caps">
+    <div class="cap">
+      <span class="tag t-exec">EJECUCION</span>
+      <h3>Corre las 3 apps en vivo</h3>
+      <p>Ejecuta PROSPER, MBAL y GAP via OpenServer. Maneja licencias (distingue app ocupada vs pool agotado) y reintenta.</p>
+      <div class="tools">prosper_run_nodal &bull; gap_solve &bull; mbal_create_reservoir</div>
+    </div>
+    <div class="cap">
+      <span class="tag t-rag">DOCUMENTACION</span>
+      <h3>Consulta cuando duda</h3>
+      <p>RAG sobre 4976 chunks de los 4 manuales PETEX. Responde dudas de variables, comandos y procedimientos.</p>
+      <div class="tools">search_docs &bull; lookup_variable</div>
+    </div>
+    <div class="cap">
+      <span class="tag t-learn">APRENDIZAJE</span>
+      <h3>Se corrige y aprende</h3>
+      <p>Arranca con 16 correcciones verificadas. Cada error que resuelve via RAG lo aprende y persiste: no vuelve a fallar.</p>
+      <div class="tools">show_learned_corrections</div>
+    </div>
+    <div class="cap">
+      <span class="tag t-orch">INGENIERIA</span>
+      <h3>Razona decisiones</h3>
+      <p>Consulta la KB de correlaciones y PVT por formacion. Elige que usar y por que. Orquesta el modelo completo.</p>
+      <div class="tools">build_integrated_model &bull; prosper_get_recommendations</div>
+    </div>
+    <div class="cap">
+      <span class="tag t-scan">ESCANEO</span>
+      <h3>Lee y modifica modelos</h3>
+      <p>Escanea un modelo existente completo (tanques, separadores, VLP, IPR, equipment) y modifica cualquier parametro en lenguaje natural.</p>
+      <div class="tools">scan_model &bull; set_parameter &bull; verify_scan_coverage</div>
+    </div>
+    <div class="cap">
+      <span class="tag t-cloud">AGENTE + CLOUD</span>
+      <h3>Aprende y escala</h3>
+      <p>Feedback loop (aprende de modelos reales), pads multi-pozo, y backend cloud-ready (local o AWS Bedrock/DynamoDB).</p>
+      <div class="tools">plan_pad &bull; record_model_success &bull; recommend_from_history</div>
+    </div>
+  </div>
+</div>
+
+<!-- FASES -->
+<div class="section">
+  <h2>El recorrido: 4 fases</h2>
+  <p class="intro">De un wrapper que fallaba en cada variable a un agente que razona como un ingeniero.</p>
+  <div class="phases">
+    <div class="ph done">
+      <div class="st">Fase 1 - Completa</div>
+      <h4>Local MVP</h4>
+      <ul>
+        <li>Server FastMCP</li>
+        <li>Ejecucion PROSPER/MBAL/GAP</li>
+        <li>License manager</li>
+        <li>Escaner de modelos</li>
+      </ul>
+    </div>
+    <div class="ph done">
+      <div class="st">Fase 2 - Completa</div>
+      <h4>RAG + Inteligencia</h4>
+      <ul>
+        <li>RAG 4976 chunks</li>
+        <li>Auto-correccion</li>
+        <li>Aprendizaje persistente</li>
+        <li>Orquestador</li>
+      </ul>
+    </div>
+    <div class="ph done">
+      <div class="st">Fase 3 - Codigo listo</div>
+      <h4>AWS Cloud</h4>
+      <ul>
+        <li>Abstraccion RAG</li>
+        <li>Abstraccion KB</li>
+        <li>Guia deployment</li>
+        <li class="pend">Deploy en AWS</li>
+      </ul>
+    </div>
+    <div class="ph curso">
+      <div class="st">Fase 4 - En curso</div>
+      <h4>Agente Autonomo</h4>
+      <ul>
+        <li>Feedback loop</li>
+        <li>Multi-well pads</li>
+        <li>Planner que razona</li>
+        <li class="pend">Bedrock Agent</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- LAS 19 TOOLS -->
+<div class="section">
+  <h2>Las 19 tools</h2>
+  <p class="intro">Todo lo que Kiro puede invocar en lenguaje natural.</p>
+  <div class="toolgrid">
+    <div class="tl"><span class="dot" style="background:var(--blue)"></span><code>check_licenses</code><span class="d">estado de licencias</span></div>
+    <div class="tl"><span class="dot" style="background:var(--blue)"></span><code>prosper_open</code><span class="d">abrir modelo</span></div>
+    <div class="tl"><span class="dot" style="background:var(--blue)"></span><code>prosper_run_nodal</code><span class="d">nodal analysis</span></div>
+    <div class="tl"><span class="dot" style="background:var(--blue)"></span><code>mbal_create_reservoir</code><span class="d">crear reservorio</span></div>
+    <div class="tl"><span class="dot" style="background:var(--blue)"></span><code>gap_build_network</code><span class="d">armar red</span></div>
+    <div class="tl"><span class="dot" style="background:var(--blue)"></span><code>gap_solve</code><span class="d">resolver red</span></div>
+    <div class="tl"><span class="dot" style="background:var(--cyan)"></span><code>search_docs</code><span class="d">buscar en manuales</span></div>
+    <div class="tl"><span class="dot" style="background:var(--cyan)"></span><code>lookup_variable</code><span class="d">nombre de variable</span></div>
+    <div class="tl"><span class="dot" style="background:var(--purple)"></span><code>show_learned_corrections</code><span class="d">que aprendio</span></div>
+    <div class="tl"><span class="dot" style="background:var(--green)"></span><code>prosper_get_recommendations</code><span class="d">KB estatica</span></div>
+    <div class="tl"><span class="dot" style="background:var(--green)"></span><code>build_integrated_model</code><span class="d">orquestador</span></div>
+    <div class="tl"><span class="dot" style="background:var(--amber)"></span><code>scan_model</code><span class="d">inventario completo</span></div>
+    <div class="tl"><span class="dot" style="background:var(--amber)"></span><code>set_parameter</code><span class="d">modificar</span></div>
+    <div class="tl"><span class="dot" style="background:var(--amber)"></span><code>verify_scan_coverage</code><span class="d">validar cobertura</span></div>
+    <div class="tl"><span class="dot" style="background:var(--amber)"></span><code>list_templates</code><span class="d">plantillas</span></div>
+    <div class="tl"><span class="dot" style="background:var(--amber)"></span><code>create_from_template</code><span class="d">clonar plantilla</span></div>
+    <div class="tl"><span class="dot" style="background:var(--purple)"></span><code>record_model_success</code><span class="d">registrar exito</span></div>
+    <div class="tl"><span class="dot" style="background:var(--purple)"></span><code>recommend_from_history</code><span class="d">casos previos</span></div>
+    <div class="tl"><span class="dot" style="background:var(--green)"></span><code>plan_pad</code><span class="d">pad multi-pozo</span></div>
+  </div>
+</div>
+
+<!-- ESTADO -->
+<div class="section">
+  <h2>Estado actual</h2>
+  <div class="estado">
+    <div class="row"><span>Codigo del MCP (19 tools)</span><span class="ok">Completo</span></div>
+    <div class="row"><span>RAG sobre documentacion</span><span class="ok">Funcionando</span></div>
+    <div class="row"><span>Auto-correccion con aprendizaje</span><span class="ok">Funcionando</span></div>
+    <div class="row"><span>Orquestador + escaner + templates</span><span class="ok">Funcionando</span></div>
+    <div class="row"><span>Agente (feedback + multi-well)</span><span class="ok">Funcionando</span></div>
+    <div class="row"><span>Repo en GitHub</span><span class="ok">Publicado</span></div>
+    <div class="row"><span>Validacion en vivo con licencia</span><span class="pend">Espera pool de licencias</span></div>
+    <div class="row"><span>Deploy en AWS</span><span class="pend">Requiere cuenta + presupuesto</span></div>
+    <div class="row"><span>KB con datos reales de UDS</span><span class="pend">A cargar por el equipo</span></div>
+  </div>
+</div>
+
+<footer>
+  <p>MCP PETEX v2 &bull; github.com/gvbazterrica/petex-mcp-server</p>
+  <p style="margin-top:4px">PROSPER &bull; MBAL &bull; GAP &bull; OpenServer &bull; FastMCP &bull; RAG &bull; AWS-ready</p>
+</footer>
+
+</div>
+</body>
+</html>
