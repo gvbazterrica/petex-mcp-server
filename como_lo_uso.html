@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como uso el asistente PETEX</title>
+<style>
+:root{
+  --bg:#0f1420;--panel:#182130;--panel2:#1f2a3a;--border:#2b3a4f;
+  --azul:#4a9eff;--verde:#42c98a;--naranja:#ff9f45;--violeta:#b98cff;
+  --text:#eaf0f7;--dim:#9aa8bc;--bright:#fff;
+  --user:#2b5a8f;--bot:#1f2a3a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:960px;margin:0 auto;padding:48px 20px}
+
+header{text-align:center;margin-bottom:48px}
+header .kicker{color:var(--verde);font-weight:600;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+header h1{font-size:2.3rem;color:var(--bright);margin-bottom:12px}
+header p{font-size:1.1rem;color:var(--dim);max-width:640px;margin:0 auto}
+
+/* La idea en 3 pasos */
+.idea{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:56px}
+@media(max-width:760px){.idea{grid-template-columns:1fr}}
+.idea-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;text-align:center}
+.idea-card .big{font-size:2rem;margin-bottom:12px}
+.idea-card h3{color:var(--bright);font-size:1.05rem;margin-bottom:8px}
+.idea-card p{font-size:.9rem;color:var(--dim)}
+
+h2{font-size:1.5rem;color:var(--bright);margin:0 0 8px;text-align:center}
+.sub{color:var(--dim);text-align:center;margin-bottom:32px}
+
+/* Chat */
+.chat{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:28px}
+.chat-title{display:flex;align-items:center;gap:10px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--border)}
+.chat-title .dot{width:10px;height:10px;border-radius:50%;background:var(--verde)}
+.chat-title span{color:var(--dim);font-size:.85rem}
+.msg{margin-bottom:16px;display:flex;flex-direction:column}
+.msg.u{align-items:flex-end}
+.msg.b{align-items:flex-start}
+.bubble{max-width:82%;padding:13px 17px;border-radius:16px;font-size:.92rem}
+.msg.u .bubble{background:var(--user);color:#fff;border-bottom-right-radius:4px}
+.msg.b .bubble{background:var(--panel2);color:var(--text);border-bottom-left-radius:4px;border:1px solid var(--border)}
+.msg .who{font-size:.72rem;color:var(--dim);margin:0 6px 4px}
+.bubble .action{display:block;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.1);font-size:.78rem;color:var(--azul);font-family:'Consolas',monospace}
+.bubble ul{margin:6px 0 0 18px}
+.bubble li{font-size:.88rem;margin-bottom:2px}
+
+/* Setup */
+.setup{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:48px}
+.setup h3{color:var(--bright);margin-bottom:16px}
+.step{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.step .n{width:28px;height:28px;border-radius:50%;background:var(--azul);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.step .txt{font-size:.92rem}
+.step .txt b{color:var(--bright)}
+.step .txt code{background:var(--bg);padding:2px 7px;border-radius:5px;font-family:'Consolas',monospace;font-size:.82rem;color:var(--azul)}
+
+.tip{background:rgba(66,201,138,.1);border:1px solid rgba(66,201,138,.3);border-radius:12px;padding:18px 22px;margin-bottom:48px}
+.tip b{color:var(--verde)}
+.tip p{font-size:.9rem;color:var(--text)}
+
+.callout{text-align:center;padding:32px;background:var(--panel);border:1px solid var(--border);border-radius:16px}
+.callout h3{color:var(--bright);font-size:1.3rem;margin-bottom:10px}
+.callout p{color:var(--dim);max-width:600px;margin:0 auto}
+
+footer{text-align:center;padding:40px 0 0;margin-top:48px;border-top:1px solid var(--border);color:var(--dim);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Asistente PETEX &bull; para todo el equipo</div>
+  <h1>Le pedis en castellano, el hace el modelo</h1>
+  <p>No hace falta saber programar ni conocer los comandos de PROSPER, MBAL o GAP. Le escribis lo que necesitas como si le hablaras a un colega, y el asistente arma, corre y explica el modelo por vos.</p>
+</header>
+
+<!-- LA IDEA -->
+<div class="idea">
+  <div class="idea-card">
+    <div class="big">&#9997;</div>
+    <h3>1. Escribis</h3>
+    <p>Le contas que pozo o red necesitas, en lenguaje normal.</p>
+  </div>
+  <div class="idea-card">
+    <div class="big">&#129302;</div>
+    <h3>2. El trabaja</h3>
+    <p>Elige correlaciones, arma el modelo, corre PROSPER/MBAL/GAP y se corrige solo si algo falla.</p>
+  </div>
+  <div class="idea-card">
+    <div class="big">&#128202;</div>
+    <h3>3. Te responde</h3>
+    <p>Te da el resultado (caudales, presiones) y el modelo listo para abrir en PETEX.</p>
+  </div>
+</div>
+
+<!-- CONVERSACIONES -->
+<h2>Asi se ve en el dia a dia</h2>
+<p class="sub">Ejemplos reales de lo que le podes pedir, sin tecnicismos</p>
+
+<!-- Chat 1: crear -->
+<div class="chat">
+  <div class="chat-title"><span class="dot"></span><span>Nuevo pozo horizontal</span></div>
+  <div class="msg u"><div class="who">Vos</div><div class="bubble">Necesito armar un pozo horizontal de Vaca Muerta de 4000 metros de rama, que produzca petroleo. Quiero conectarlo a un separador de 200 psi a 3 km.</div></div>
+  <div class="msg b"><div class="who">Asistente</div><div class="bubble">Listo. Para un pozo de Vaca Muerta con petroleo eleg&iacute; la correlacion PetroleumExperts2 y modelo IPR Vogel, que son los que mejor funcionan en esa formacion. Arme el pozo, el reservorio y la red hasta el separador.
+  <span class="action">-&gt; build_integrated_model</span></div></div>
+  <div class="msg b"><div class="bubble">Resultado: el pozo produce ~1250 barriles/dia. Te deje los archivos listos:
+  <ul><li>pozo.Out (PROSPER)</li><li>reservorio.mbi (MBAL)</li><li>red.gap (GAP)</li></ul></div></div>
+</div>
+
+<!-- Chat 2: consultar -->
+<div class="chat">
+  <div class="chat-title"><span class="dot"></span><span>Revisar un modelo existente</span></div>
+  <div class="msg u"><div class="who">Vos</div><div class="bubble">Abri el modelo APO-135 y decime que tiene: que separadores, que correlacion usa, la presion del reservorio.</div></div>
+  <div class="msg b"><div class="who">Asistente</div><div class="bubble">Escanee el modelo completo. Esto es lo que tiene:
+  <ul><li>Pozo horizontal, gas condensado</li><li>Presion de reservorio: 7441 psi</li><li>Correlacion VLP: PetroleumExperts2</li><li>1 separador a 200 psi</li></ul>
+  <span class="action">-&gt; scan_model</span></div></div>
+</div>
+
+<!-- Chat 3: modificar -->
+<div class="chat">
+  <div class="chat-title"><span class="dot"></span><span>Cambiar un parametro</span></div>
+  <div class="msg u"><div class="who">Vos</div><div class="bubble">Cambiame la presion del separador a 150 psi y volve a correr, quiero ver cuanto cambia la produccion.</div></div>
+  <div class="msg b"><div class="who">Asistente</div><div class="bubble">Cambie el separador a 150 psi y resolvi la red de nuevo. La produccion subio de 1250 a 1340 barriles/dia (menos contrapresion). Guarde el cambio.
+  <span class="action">-&gt; set_parameter + gap_solve</span></div></div>
+</div>
+
+<!-- Chat 4: preguntar -->
+<div class="chat">
+  <div class="chat-title"><span class="dot"></span><span>Consultar por dudas</span></div>
+  <div class="msg u"><div class="who">Vos</div><div class="bubble">Que correlacion me conviene usar para un pozo convencional de Mulichinco?</div></div>
+  <div class="msg b"><div class="who">Asistente</div><div class="bubble">Para Mulichinco, que es un reservorio convencional, te recomiendo IPR Darcy (porque suele estar sobre el punto de burbuja) y VLP PetroleumExperts2. Lo saque de la base de conocimiento del equipo.
+  <span class="action">-&gt; prosper_get_recommendations</span></div></div>
+</div>
+
+<!-- Chat 5: pad -->
+<div class="chat">
+  <div class="chat-title"><span class="dot"></span><span>Un pad completo</span></div>
+  <div class="msg u"><div class="who">Vos</div><div class="bubble">Planificame un pad de 3 pozos horizontales de Vaca Muerta con un separador comun.</div></div>
+  <div class="msg b"><div class="who">Asistente</div><div class="bubble">Arme el plan del pad. Los 3 pozos van a un manifold comun y de ahi al separador. Cada pozo usa Vogel + PE2. Te muestro la secuencia paso a paso antes de correr, por si queres ajustar algo.
+  <span class="action">-&gt; plan_pad</span></div></div>
+</div>
+
+<!-- COMO EMPEZAR -->
+<div class="setup">
+  <h3>Como lo pongo en mi maquina (una sola vez)</h3>
+  <div class="step"><div class="n">1</div><div class="txt">Tener <b>PROSPER, MBAL y GAP instalados</b> con licencia (lo que ya usas normalmente).</div></div>
+  <div class="step"><div class="n">2</div><div class="txt">Instalar el asistente con un comando: <code>pip install "mcp[cli]" openserver</code></div></div>
+  <div class="step"><div class="n">3</div><div class="txt">Pegar el archivo de configuracion (<code>mcp_config_para_kiro.json</code>) en Kiro. Te lo pasa el equipo, es copiar y pegar.</div></div>
+  <div class="step"><div class="n">4</div><div class="txt">Listo. Abris Kiro y le empezas a escribir lo que necesitas.</div></div>
+</div>
+
+<!-- TIP -->
+<div class="tip">
+  <p><b>No te preocupes si te equivocas al pedir.</b> El asistente pregunta si algo no queda claro, y si una variable de PETEX falla, la busca en los manuales y se corrige solo. Cada vez que resuelve algo, lo aprende para la proxima.</p>
+</div>
+
+<!-- CIERRE -->
+<div class="callout">
+  <h3>La idea es simple</h3>
+  <p>Que cualquiera del equipo pueda armar y consultar modelos de produccion sin ser experto en PETEX ni en programacion. Vos poner el criterio de ingenieria; el asistente hace el trabajo repetitivo.</p>
+</div>
+
+<footer>
+  <p>Asistente PETEX &bull; UDS Pan Energy</p>
+  <p style="margin-top:4px">Funciona con PROSPER, MBAL y GAP que ya tenes instalados</p>
+</footer>
+
+</div>
+</body>
+</html>

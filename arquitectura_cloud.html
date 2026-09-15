@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP PETEX - Arquitectura Cloud (chatbot + licencias locales)</title>
+<style>
+:root{
+  --bg:#0b1018;--nube:#141d2e;--local:#1a1410;--border:#2a3444;
+  --azul:#4a9eff;--verde:#42c98a;--naranja:#ff9f45;--violeta:#b98cff;--rojo:#ff6b6b;
+  --text:#e8eef6;--dim:#93a1b5;--bright:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding:52px 22px}
+
+header{text-align:center;margin-bottom:20px}
+header .k{color:var(--naranja);font-weight:600;font-size:.82rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+header h1{font-size:2.3rem;color:var(--bright);margin-bottom:12px}
+header p{font-size:1.08rem;color:var(--dim);max-width:720px;margin:0 auto}
+
+.vision{background:rgba(74,158,255,.08);border:1px solid rgba(74,158,255,.25);border-radius:12px;padding:20px 24px;margin:32px 0 48px;text-align:center}
+.vision p{color:var(--text);font-size:.95rem}
+.vision b{color:var(--azul)}
+
+h2{font-size:1.5rem;color:var(--bright);margin:52px 0 10px;text-align:center}
+.intro{color:var(--dim);text-align:center;max-width:760px;margin:0 auto 32px}
+
+/* Diagrama */
+.diagram{display:grid;gap:16px;margin-bottom:24px}
+.zone{border-radius:16px;padding:24px;border:1px solid var(--border)}
+.zone.cloud{background:var(--nube);border-color:rgba(74,158,255,.3)}
+.zone.onprem{background:var(--local);border-color:rgba(255,159,69,.3)}
+.zone-h{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.zone-h .ico{font-size:1.5rem}
+.zone-h h3{color:var(--bright);font-size:1.1rem}
+.zone-h .tag{font-size:.7rem;padding:3px 10px;border-radius:20px;margin-left:auto;font-weight:600}
+.tag.c{background:rgba(74,158,255,.2);color:var(--azul)}
+.tag.o{background:rgba(255,159,69,.2);color:var(--naranja)}
+.boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px}
+.box h4{color:var(--bright);font-size:.92rem;margin-bottom:5px}
+.box p{font-size:.8rem;color:var(--dim)}
+.box .svc{display:inline-block;font-size:.66rem;padding:2px 8px;border-radius:4px;margin-top:8px}
+.svc.aws{background:rgba(255,159,69,.14);color:var(--naranja)}
+.svc.loc{background:rgba(66,201,138,.14);color:var(--verde)}
+
+.bridge{text-align:center;padding:14px;position:relative}
+.bridge .line{color:var(--verde);font-weight:600;font-size:.9rem}
+.bridge .arrow{font-size:1.6rem;color:var(--verde)}
+.bridge small{display:block;color:var(--dim);font-size:.78rem;margin-top:4px}
+
+/* Flujo pasos */
+.flow{counter-reset:s;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:760px){.flow{grid-template-columns:1fr}}
+.fstep{background:var(--nube);border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+.fstep .n{counter-increment:s;background:var(--azul);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.fstep .n::before{content:counter(s)}
+.fstep p{font-size:.88rem}
+.fstep b{color:var(--bright)}
+
+/* Seguridad */
+.sec{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:760px){.sec{grid-template-columns:1fr}}
+.sec-card{background:var(--nube);border:1px solid var(--border);border-radius:12px;padding:20px}
+.sec-card h4{color:var(--verde);font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.sec-card p{font-size:.86rem;color:var(--dim)}
+
+/* Estado */
+.estado{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:8px}
+@media(max-width:760px){.estado{grid-template-columns:1fr}}
+.est{background:var(--nube);border:1px solid var(--border);border-radius:10px;padding:16px}
+.est .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.est h4{color:var(--bright);font-size:.9rem}
+.est .badge{font-size:.68rem;padding:2px 9px;border-radius:5px;font-weight:600}
+.b-ok{background:rgba(66,201,138,.18);color:var(--verde)}
+.b-pend{background:rgba(255,159,69,.18);color:var(--naranja)}
+.est p{font-size:.8rem;color:var(--dim)}
+
+pre{background:#05080d;border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;margin-bottom:20px}
+pre code{font-family:'Consolas',monospace;font-size:.8rem;color:#e8eef6;line-height:1.5}
+.cmt{color:var(--dim)}.kw{color:#ff9f45}
+
+footer{text-align:center;padding:40px 0 0;margin-top:52px;border-top:1px solid var(--border);color:var(--dim);font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="k">Arquitectura objetivo &bull; UDS Pan Energy</div>
+  <h1>Chatbot en la nube, licencias en casa</h1>
+  <p>Un asistente publicado en la web al que todo el equipo le habla en castellano, con el conocimiento en la nube, pero ejecutando las licencias PETEX donde tienen que estar: on-premise.</p>
+</header>
+
+<div class="vision">
+  <p><b>La idea:</b> el ingeniero abre una URL, le pide un modelo al chatbot. El cerebro (nube) decide y planifica; la ejecucion real de PROSPER/MBAL/GAP ocurre en el servidor local con la licencia. El resultado vuelve al chat.</p>
+</div>
+
+<!-- DIAGRAMA -->
+<h2>Como se conecta todo</h2>
+<p class="intro">El desafio: la nube no puede "entrar" a la red interna por seguridad. La solucion: un agente local que sale hacia la nube a buscar trabajo. Nunca al reves.</p>
+
+<div class="diagram">
+  <!-- NUBE -->
+  <div class="zone cloud">
+    <div class="zone-h"><span class="ico">&#9729;</span><h3>NUBE (AWS)</h3><span class="tag c">el cerebro y el conocimiento</span></div>
+    <div class="boxes">
+      <div class="box"><h4>Chatbot web</h4><p>Una URL. El ingeniero le escribe en lenguaje natural.</p><span class="svc aws">API Gateway + Web</span></div>
+      <div class="box"><h4>Agente conversacional</h4><p>Interpreta el pedido, decide que tools usar y en que orden.</p><span class="svc aws">Bedrock Agent</span></div>
+      <div class="box"><h4>Documentacion</h4><p>Los 4 manuales PETEX indexados para resolver dudas.</p><span class="svc aws">Bedrock KB</span></div>
+      <div class="box"><h4>Conocimiento de ingenieria</h4><p>Correlaciones, PVT, casos exitosos del equipo.</p><span class="svc aws">DynamoDB</span></div>
+      <div class="box"><h4>Cola de trabajos</h4><p>Los pedidos que requieren ejecutar PETEX esperan aca.</p><span class="svc aws">SQS</span></div>
+    </div>
+  </div>
+
+  <!-- PUENTE -->
+  <div class="bridge">
+    <div class="arrow">&#8645;</div>
+    <div class="line">El agente local hace POLLING saliente (HTTPS)</div>
+    <small>La nube NUNCA inicia conexion hacia adentro. Pasa cualquier firewall corporativo.</small>
+  </div>
+
+  <!-- ON PREMISE -->
+  <div class="zone onprem">
+    <div class="zone-h"><span class="ico">&#127970;</span><h3>ON-PREMISE (red UDS)</h3><span class="tag o">donde viven las licencias</span></div>
+    <div class="boxes">
+      <div class="box"><h4>Agente local</h4><p>Lee la cola, ejecuta el trabajo, sube el resultado. Ya construido.</p><span class="svc loc">petex_cloud_agent.py</span></div>
+      <div class="box"><h4>MCP Server (19 tools)</h4><p>El motor que ejecuta las operaciones PETEX.</p><span class="svc loc">petex_mcp_server.py</span></div>
+      <div class="box"><h4>OpenServer + PETEX</h4><p>PROSPER, MBAL, GAP con la licencia flotante.</p><span class="svc loc">IPM 13.5</span></div>
+      <div class="box"><h4>Modelos</h4><p>Los .Out/.mbi/.gap. Quedan en la red, no salen si no se quiere.</p><span class="svc loc">disco local / red</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- FLUJO -->
+<h2>El flujo de un pedido</h2>
+<div class="flow">
+  <div class="fstep"><div class="n"></div><p><b>El ingeniero escribe</b> en el chatbot: "arma un pozo horizontal de VM para 200 m3/d".</p></div>
+  <div class="fstep"><div class="n"></div><p><b>El agente conversacional</b> (Bedrock) decide correlaciones consultando la KB y arma el plan.</p></div>
+  <div class="fstep"><div class="n"></div><p><b>Pone el trabajo en la cola</b> (SQS): la tool a ejecutar y sus parametros.</p></div>
+  <div class="fstep"><div class="n"></div><p><b>El agente local</b> (on-premise) que estaba haciendo polling, toma el trabajo.</p></div>
+  <div class="fstep"><div class="n"></div><p><b>Ejecuta el MCP local</b> contra PROSPER/MBAL/GAP con la licencia. Se auto-corrige si algo falla.</p></div>
+  <div class="fstep"><div class="n"></div><p><b>Sube el resultado</b> a la nube (caudales, archivos). El chatbot se lo muestra al ingeniero.</p></div>
+</div>
+
+<pre><code><span class="cmt"># Cambiar de demo local a AWS es solo configuracion:</span>
+<span class="kw">set</span> PETEX_QUEUE_URL=https://sqs.us-east-1.amazonaws.com/.../petex-jobs
+<span class="kw">set</span> PETEX_RESULT_TABLE=petex-results
+<span class="kw">set</span> PETEX_AGENT_ID=server-vm-01
+<span class="cmt"># El mismo petex_cloud_agent.py corre contra AWS sin tocar codigo.</span></code></pre>
+
+<!-- SEGURIDAD -->
+<h2>Lo que va a preguntar IT</h2>
+<p class="intro">La arquitectura esta pensada para pasar una revision de seguridad corporativa.</p>
+<div class="sec">
+  <div class="sec-card"><h4>&#128274; Sin puertos entrantes</h4><p>El agente local solo hace salidas HTTPS a AWS. No se abre ningun puerto en la red interna. La nube no puede iniciar conexiones hacia adentro.</p></div>
+  <div class="sec-card"><h4>&#128273; Data sensible se queda</h4><p>Los modelos (.Out con datos de reservorios) no salen de la red salvo que se configure. Solo viajan parametros y resultados numericos.</p></div>
+  <div class="sec-card"><h4>&#128100; Autenticacion por agente</h4><p>Cada agente local se autentica con un rol IAM que solo puede leer su cola y escribir sus resultados. Nada mas.</p></div>
+  <div class="sec-card"><h4>&#128221; Auditoria</h4><p>Cada trabajo queda registrado (quien pidio, que se ejecuto, resultado) en CloudWatch/DynamoDB.</p></div>
+</div>
+
+<!-- ESTADO -->
+<h2>Que esta construido y que falta</h2>
+<div class="estado">
+  <div class="est"><div class="h"><h4>Agente local de cola</h4><span class="badge b-ok">Listo</span></div><p>petex_cloud_agent.py probado end-to-end con cola demo. Cambia a AWS con env vars.</p></div>
+  <div class="est"><div class="h"><h4>MCP Server (19 tools)</h4><span class="badge b-ok">Listo</span></div><p>Ejecuta PROSPER/MBAL/GAP local, con auto-correccion.</p></div>
+  <div class="est"><div class="h"><h4>RAG + KB (abstraccion)</h4><span class="badge b-ok">Listo</span></div><p>Backend local o AWS (Bedrock/DynamoDB) intercambiable.</p></div>
+  <div class="est"><div class="h"><h4>Recursos AWS</h4><span class="badge b-pend">A crear</span></div><p>Bedrock Agent, SQS, DynamoDB. Requiere cuenta y presupuesto UDS.</p></div>
+  <div class="est"><div class="h"><h4>Chatbot web (UI)</h4><span class="badge b-pend">A construir</span></div><p>La interfaz web. Puede ser simple (una pagina) o integrarse a herramientas existentes.</p></div>
+  <div class="est"><div class="h"><h4>Deploy y hardening</h4><span class="badge b-pend">Con IT</span></div><p>Revision de seguridad, roles IAM, red.</p></div>
+</div>
+
+<footer>
+  <p>MCP PETEX v2 &bull; Arquitectura cloud &bull; UDS Pan Energy</p>
+  <p style="margin-top:4px">El puente nube &harr; local ya funciona. Falta infraestructura AWS y la UI del chat.</p>
+</footer>
+
+</div>
+</body>
+</html>
